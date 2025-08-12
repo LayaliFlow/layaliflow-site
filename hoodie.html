@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LayaliFlow — Modest Activewear</title>
+  <meta name="description" content="LayaliFlow crafts elegant, modest sportswear with breathable fabrics and thoughtful silhouettes." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="LayaliFlow — Modest Activewear" />
+  <meta property="og:description" content="Elegant, modest sportswear designed for movement and confidence." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://layaliflow.github.io/layaliflow-site/" />
+  <meta property="og:image" content="https://layaliflow.github.io/layaliflow-site/images/crescent_logo.png" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="images/crescent_logo.png">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- NAV -->
+  <nav class="nav" role="navigation" aria-label="Primary">
+    <div class="container inner">
+      <a class="brand" href="#home" aria-label="LayaliFlow Home">
+        <div class="logo">
+          <img src="images/crescent_logo.png" alt="LayaliFlow Logo">
+        </div>
+        <span>LayaliFlow</span>
+      </a>
+
+      <!-- Search + buttons -->
+    <div class="nav-actions" style="gap:8px" role="search">
+      <form class="search" aria-label="Site search" onsubmit="event.preventDefault();">
+        <input id="site-search" type="search" placeholder="Search pieces…" aria-label="Search featured pieces">
+      </form>
+      <a href="#lookbook" class="btn">Lookbook</a>
+      <a href="#contact" class="btn" aria-label="Contact LayaliFlow">Contact</a>
+    </div>
+    </div>
+  </nav>
+
+  <!-- PRODUCT -->
+  <section class="product-page">
+  <div class="container product-main two-col">
+
+    <!-- Gallery (left) -->
+    <div class="product-gallery">
+
+      <!-- Main stage -->
+      <div class="gallery-stage" aria-live="polite">
+        <button class="gallery-nav prev" aria-label="Previous image">❮</button>
+        <img src="images/hoodie.png" alt="LayaliFlow Hoodie — front view" class="stage-img is-active">
+        <img src="images/hoodie.png" alt="LayaliFlow Hoodie — side view" class="stage-img">
+        <img src="images/hoodie.png" alt="LayaliFlow Hoodie — detail view" class="stage-img">
+        <button class="gallery-nav next" aria-label="Next image">❯</button>
+      </div>
+
+      <!-- Thumbnails -->
+      <div class="gallery-thumbs" role="group" aria-label="Gallery thumbnails">
+        <button class="thumb is-active" aria-label="Front image">
+          <img src="images/hoodie.png" alt="">
+        </button>
+        <button class="thumb" aria-label="Side image">
+          <img src="images/hoodie.png" alt="">
+        </button>
+        <button class="thumb" aria-label="Detail image">
+          <img src="images/hoodie.png" alt="">
+        </button>
+      </div>
+    </div>
+
+    <!-- Info (right) -->
+    <div class="product-info">
+      <h1>LayaliFlow Hoodie</h1>
+      <p class="price">$85.00 CAD</p>
+
+      <!-- Colors -->
+      <div class="product-option">
+        <div class="label-row">
+          <span class="label">Color:</span>
+          <span class="value">Black</span>
+        </div>
+        <div class="swatches">
+          <!-- Use any colors you want; each is a radio input + label circle -->
+          <div class="swatch">
+            <input checked id="color-black" name="color" type="radio" value="Black">
+            <label for="color-black" title="Black" style="--swatch:#121417"></label>
+          </div>
+          <div class="swatch">
+            <input id="color-oat" name="color" type="radio" value="Oat">
+            <label for="color-oat" title="Oat" style="--swatch:#e9e5dd"></label>
+          </div>
+          <div class="swatch">
+            <input id="color-greige" name="color" type="radio" value="Greige">
+            <label for="color-greige" title="Greige" style="--swatch:#a79f95"></label>
+          </div>
+          <div class="swatch">
+            <input id="color-terracotta" name="color" type="radio" value="Terracotta">
+            <label for="color-terracotta" title="Terracotta" style="--swatch:#8b4a36"></label>
+          </div>
+          <div class="swatch">
+            <input id="color-navy" name="color" type="radio" value="Navy">
+            <label for="color-navy" title="Navy" style="--swatch:#1b2540"></label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sizes -->
+      <div class="product-option">
+        <span class="label">Size:</span>
+        <div class="sizes">
+          <label class="size"><input type="radio" name="size" value="XS"><span>XS</span></label>
+          <label class="size"><input type="radio" name="size" value="S"><span>S</span></label>
+          <label class="size"><input type="radio" name="size" value="M"><span>M</span></label>
+          <label class="size"><input type="radio" name="size" value="L"><span>L</span></label>
+          <label class="size"><input type="radio" name="size" value="XL"><span>XL</span></label>
+          <label class="size"><input type="radio" name="size" value="2XL"><span>2XL</span></label>
+          <label class="size"><input type="radio" name="size" value="3XL"><span>3XL</span></label>
+        </div>
+      </div>
+
+      <div class="fit-links">
+        <a href="#" class="muted-link">Size Chart</a>
+        <a href="#" class="muted-link">Find your perfect fit</a> <!-- ???????????? -->
+      </div>
+
+      <button class="btn-primary add-to-cart">Add to Cart</button>
+
+      <p class="description">
+        A loose, breathable hoodie perfect for modest sportswear—mid‑thigh length, wide hood, and cozy coverage.
+      </p>
+    </div>
+  </div>
+</section>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Search filter
+    (function(){
+      const input = document.getElementById('site-search');
+      if (!input) return;
+      const cards = Array.from(document.querySelectorAll('#lookbook .card'));
+      const getText = (el) => (el?.textContent || '').toLowerCase();
+      input.addEventListener('input', function () {
+        const q = this.value.trim().toLowerCase();
+        cards.forEach(card => {
+          const pill = getText(card.querySelector('.pill'));
+          const title = getText(card.querySelector('h3'));
+          const desc = getText(card.querySelector('.sub'));
+          const hit = !q || pill.includes(q) || title.includes(q) || desc.includes(q);
+          card.style.display = hit ? '' : 'none';
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
