@@ -28,13 +28,15 @@
         </div>
         <span>LayaliFlow</span>
       </a>
-      <div style="display:flex;gap:10px;align-items:center">
-        <a href="#lookbook" class="btn">Lookbook</a>
-        <a href="#contact" class="btn" aria-label="Contact LayaliFlow">Contact</a>
-        <form class="search" role="search" aria-label="Site search" onsubmit="event.preventDefault();">
-          <input id="site-search" type="search" placeholder="Search pieces…" aria-label="Search featured pieces">
-        </form>
-      </div>
+
+      <!-- Search + buttons -->
+    <div class="nav-actions" style="gap:8px" role="search">
+      <form class="search" aria-label="Site search" onsubmit="event.preventDefault();">
+        <input id="site-search" type="search" placeholder="Search pieces…" aria-label="Search featured pieces">
+      </form>
+      <a href="#lookbook" class="btn">Lookbook</a>
+      <a href="#contact" class="btn" aria-label="Contact LayaliFlow">Contact</a>
+    </div>
     </div>
   </nav>
 
