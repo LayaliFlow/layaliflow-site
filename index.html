@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LayaliFlow — Modest Activewear</title>
+  <meta name="description" content="LayaliFlow crafts elegant, modest sportswear with breathable fabrics and thoughtful silhouettes." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="LayaliFlow — Modest Activewear" />
+  <meta property="og:description" content="Elegant, modest sportswear designed for movement and confidence." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://YOUR_USERNAME.github.io/YOUR_REPO/" />
+  <meta property="og:image" content="https://YOUR_USERNAME.github.io/YOUR_REPO/og-image.jpg" />
+
+  <!-- Favicon placeholders (replace later) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🌙</text></svg>">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root{
+      --bg:#f6f5f3;           /* warm neutral */
+      --card:#ffffff;
+      --ink:#1f1f1f;          /* deep ink */
+      --muted:#6b6b6b;        /* soft grey */
+      --accent:#c7a36e;       /* muted gold */
+      --accent-2:#8b6b3e;     /* darker gold/brown */
+      --stone:#e9e5dd;        /* light stone */
+      --shadow:0 10px 30px rgba(0,0,0,.08);
+      --radius:20px;
+      --maxw:1120px;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;height:100%;}
+    body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    .container{max-width:var(--maxw);margin:auto;padding:0 20px}
+    .nav{position:sticky;top:0;background:rgba(246,245,243,.8);backdrop-filter:saturate(150%) blur(8px);border-bottom:1px solid #eae6de;z-index:20}
+    .nav .inner{display:flex;align-items:center;justify-content:space-between;height:64px}
+    .brand{display:flex;gap:10px;align-items:center;font-weight:700}
+    .brand .logo{width:36px;height:36px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:grid;place-items:center;color:white;font-weight:800;box-shadow:var(--shadow)}
+    .brand span{letter-spacing:.5px}
+    .nav a.btn{padding:10px 14px;border:1px solid var(--accent-2);border-radius:999px}
+
+    .hero{display:grid;grid-template-columns:1.1fr 0.9fr;gap:28px;align-items:center;padding:64px 0}
+    .chip{display:inline-flex;gap:8px;align-items:center;border:1px solid var(--stone);background:white;border-radius:999px;padding:6px 12px;color:#4b4b4b;font-size:14px}
+    .hero h1{font-family:"Playfair Display",serif;font-weight:700;line-height:1.05;margin:16px 0 12px;font-size: clamp(32px, 6vw, 56px)}
+    .hero p{font-size:18px;color:#494949;max-width:58ch}
+    .cta{display:flex;gap:12px;margin-top:20px}
+    .btn-primary{background:var(--accent-2);color:white;padding:12px 18px;border:none;border-radius:14px;box-shadow:var(--shadow);font-weight:600}
+    .btn-ghost{border:1px solid var(--accent-2);background:white;color:var(--accent-2);padding:12px 18px;border-radius:14px}
+    .hero-card{border-radius:var(--radius);overflow:hidden;background:linear-gradient(180deg,#f0ece4, #e6dfd3);box-shadow:var(--shadow)}
+    .hero-card .img{aspect-ratio:4/5;background:linear-gradient(135deg,#b8a992,#ece6da);display:grid;place-items:center;color:white;font-size:40px}
+
+    .section{padding:56px 0}
+    .section h2{font-family:"Playfair Display",serif;font-size:clamp(24px,4vw,36px);margin:0 0 8px}
+    .section .sub{color:var(--muted);margin-bottom:28px}
+
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;border:1px solid #eee6da}
+    .card .media{aspect-ratio:4/5;background:linear-gradient(135deg,#d5c9b4,#efe9df)}
+    .card .body{padding:16px}
+    .pill{display:inline-flex;padding:4px 10px;border-radius:999px;background:#f0ebe2;color:#6b5b3e;font-size:12px}
+
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+    .faq details{background:white;border:1px solid #eee6da;border-radius:12px;padding:14px;margin-bottom:12px}
+    .faq summary{cursor:pointer;font-weight:600}
+    .faq p{margin:10px 0 0;color:#4b4b4b}
+
+    form{display:grid;gap:12px}
+    input,textarea{width:100%;padding:12px 14px;border:1px solid #ddd3c3;border-radius:12px;background:white}
+    label{font-size:14px;color:#555}
+
+    .footer{margin-top:40px;border-top:1px solid #eae6de;padding:28px 0;color:#666}
+
+    /* responsive */
+    @media (max-width: 960px){
+      .hero{grid-template-columns:1fr;}
+      .grid{grid-template-columns:1fr 1fr}
+      .two-col{grid-template-columns:1fr}
+    }
+    @media (max-width: 640px){
+      .grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <!-- NAV -->
+  <nav class="nav" role="navigation" aria-label="Primary">
+    <div class="container inner">
+      <a class="brand" href="#home" aria-label="LayaliFlow Home">
+        <div class="logo" aria-hidden="true">LF</div>
+        <span>LayaliFlow</span>
+      </a>
+      <div style="display:flex;gap:10px;align-items:center">
+        <a href="#lookbook" class="btn">Lookbook</a>
+        <a href="#contact" class="btn" aria-label="Contact LayaliFlow">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header id="home" class="hero container">
+    <div>
+      <span class="chip" aria-label="Tagline"><span>🌙</span> Modest. Effortless. Strong.</span>
+      <h1>Modest activewear for movement and confidence.</h1>
+      <p>
+        LayaliFlow crafts breathable sets, flowy skirt‑pants, and performance hijabs in earthy tones—designed to support your training while honoring your style.
+      </p>
+      <div class="cta">
+        <a class="btn-primary" href="#lookbook">Explore Collection</a>
+        <a class="btn-ghost" href="#about">Our Story</a>
+      </div>
+      <p class="sub" style="margin-top:12px">FR bientôt • Shipping details coming soon</p>
+    </div>
+    <div class="hero-card" aria-hidden="true">
+      <div class="img">LayaliFlow</div>
+    </div>
+  </header>
+
+  <!-- LOOKBOOK / PRODUCTS -->
+  <section id="lookbook" class="section">
+    <div class="container">
+      <h2>Featured pieces</h2>
+      <p class="sub">Neutral palettes, technical fabrics, modest silhouettes.</p>
+      <div class="grid" role="list">
+        <article class="card" role="listitem">
+          <div class="media" aria-hidden="true"></div>
+          <div class="body">
+            <div class="pill">Skirt‑Pants</div>
+            <h3 style="margin:8px 0 6px">A‑Line Training Skirt‑Pants</h3>
+            <p class="sub">Flowy outer skirt with straight under‑leggings. Breathable, squat‑proof.</p>
+          </div>
+        </article>
+        <article class="card" role="listitem">
+          <div class="media" aria-hidden="true"></div>
+          <div class="body">
+            <div class="pill">Oversized Tee</div>
+            <h3 style="margin:8px 0 6px">GS‑Inspired Oversized Top</h3>
+            <p class="sub">Boxy drape and dropped shoulders for airiness and coverage.</p>
+          </div>
+        </article>
+        <article class="card" role="listitem">
+          <div class="media" aria-hidden="true"></div>
+          <div class="body">
+            <div class="pill">Hijab</div>
+            <h3 style="margin:8px 0 6px">Performance Hijab</h3>
+            <p class="sub">Lightweight, opaque, secure—designed for training days.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT + SIZE GUIDE PREVIEW -->
+  <section id="about" class="section">
+    <div class="container two-col">
+      <div>
+        <h2>Our story</h2>
+        <p class="sub">Born in Montreal, inspired by movement and faith.</p>
+        <p>
+          We build long‑lasting pieces with a modest cut and elegant lines. Our design language is earthy and calm—neutrals, soft drape, and clean details—so you feel composed in every rep.
+        </p>
+        <ul>
+          <li>Breathable, quick‑dry fabrics</li>
+          <li>Opaque, squat‑proof leggings & skirt‑pants</li>
+          <li>Earth‑tone palette with gold accents</li>
+        </ul>
+      </div>
+      <div>
+        <h2>Size & fit</h2>
+        <p class="sub">Simple guidance that respects different preferences.</p>
+        <div class="card" role="region" aria-label="Size tips" style="padding:16px">
+          <p><strong>Oversized tops:</strong> choose your usual size for loose drape. Size up for extra length or sleeve room.</p>
+          <p><strong>Skirt‑pants:</strong> waist true‑to‑size; outer skirt is A‑line for ease.
+          </p>
+          <p><strong>Hijab:</strong> standard length covers chest; sports pinless style available soon.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="section">
+    <div class="container faq">
+      <h2>FAQ</h2>
+      <p class="sub">We’ll update as production timelines firm up.</p>
+      <details>
+        <summary>When will products be available?</summary>
+        <p>We’re finalizing suppliers now. Sign up below to be first to know.</p>
+      </details>
+      <details>
+        <summary>Do you ship internationally?</summary>
+        <p>We plan to start with Canada/US and expand based on demand.</p>
+      </details>
+      <details>
+        <summary>How do returns work?</summary>
+        <p>We’ll publish a straightforward, fair policy before launch.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="section" aria-labelledby="contact-heading">
+    <div class="container two-col">
+      <div>
+        <h2 id="contact-heading">Stay in the loop</h2>
+        <p class="sub">Questions, wholesale, or early access? Send us a note.</p>
+        <form method="POST" action="https://formspree.io/f/your-id" aria-label="Contact form">
+          <div>
+            <label for="name">Name</label>
+            <input id="name" name="name" required autocomplete="name" />
+          </div>
+          <div>
+            <label for="email">Email</label>
+            <input id="email" type="email" name="email" required autocomplete="email" />
+          </div>
+          <div>
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+          </div>
+          <button class="btn-primary" type="submit">Send</button>
+          <p class="sub">This form uses Formspree on GitHub Pages (no backend needed).</p>
+        </form>
+      </div>
+      <div>
+        <div class="card" style="padding:16px">
+          <h3 style="margin-top:0">Brand palette</h3>
+          <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px">
+            <div style="background:#f6f5f3;border-radius:12px;aspect-ratio:1/1"></div>
+            <div style="background:#e9e5dd;border-radius:12px;aspect-ratio:1/1"></div>
+            <div style="background:#c7a36e;border-radius:12px;aspect-ratio:1/1"></div>
+            <div style="background:#8b6b3e;border-radius:12px;aspect-ratio:1/1"></div>
+            <div style="background:#1f1f1f;border-radius:12px;aspect-ratio:1/1"></div>
+          </div>
+          <p class="sub" style="margin-top:10px">Neutral earth tones with soft gold accents.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container" style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap">
+      <small>© <span id="year"></span> LayaliFlow. All rights reserved.</small>
+      <div style="display:flex;gap:14px">
+        <a href="#" aria-label="Instagram">Instagram</a>
+        <a href="#" aria-label="Email">hello@layaliflow.com</a>
+        <a href="#" aria-label="Privacy">Privacy</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+
+  <!--
+  QUICK DEPLOY (GitHub Pages):
+  1) Create a public repo (e.g., layaliflow-site) and add this file as index.html at the root.
+  2) Repo → Settings → Pages → Build & deployment → "Deploy from a branch"; Branch: main; Folder: / (root).
+  3) Wait for the green check. Your site will be at https://YOUR_USERNAME.github.io/layaliflow-site/
+  4) Custom domain: In Settings → Pages, add www.layaliflow.com and follow DNS steps (CNAME to YOUR_USERNAME.github.io). Enable HTTPS.
+  5) Contact form: replace action URL with your Formspree endpoint.
+  6) Social preview: replace og:url and og:image in the <head>.
+  -->
+</body>
+</html>
