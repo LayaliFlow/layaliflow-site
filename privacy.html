@@ -1,29 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Privacy Policy — LayaliFlow</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta name="description" content="LayaliFlow crafts elegant, modest sportswear with breathable fabrics and thoughtful silhouettes." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="LayaliFlow — Modest Activewear" />
+  <meta property="og:description" content="Elegant, modest sportswear designed for movement and confidence." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://layaliflow.github.io/layaliflow-site/" />
+  <meta property="og:image" content="https://layaliflow.github.io/layaliflow-site/images/crescent_logo.png" />
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="images/crescent_logo.png">
+
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body class="privacy-page">
   <header>
     <!-- NAV -->
     <nav class="nav" role="navigation" aria-label="Primary">
       <div class="container inner">
-        <a class="brand" href="#home" aria-label="LayaliFlow Home">
+        <a class="brand" href="index.html" aria-label="LayaliFlow Home">
           <div class="logo">
             <img src="images/crescent_logo.png" alt="LayaliFlow Logo">
           </div>
           <span>LayaliFlow</span>
         </a>
-        <div style="display:flex;gap:10px;align-items:center">
-          <a href="#lookbook" class="btn">Lookbook</a>
-          <a href="#contact" class="btn" aria-label="Contact LayaliFlow">Contact</a>
-        </div>
+
+        <!-- Search + buttons -->
+      <div class="nav-actions" style="gap:8px" role="search">
+        <form class="search" aria-label="Site search" onsubmit="event.preventDefault();">
+          <input id="site-search" type="search" placeholder="Search pieces…" aria-label="Search featured pieces">
+        </form>
+        <a href="index.html#lookbook" class="btn">Lookbook</a>
+        <a href="index.html#contact" class="btn" aria-label="Contact LayaliFlow">Contact</a>
+      </div>
       </div>
     </nav>
   </header>

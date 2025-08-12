@@ -42,7 +42,7 @@ h1, h2 {
 .brand span {
   font-family: "Basmala", "Scheherazade New", serif;
   font-weight: 700;
-  font-size: clamp(16px, 2.4vw, 26px);
+  font-size: clamp(14px, 2.0vw, 24px);
   letter-spacing: .5px;
 }
 
@@ -104,7 +104,7 @@ h1, h2 {
 .nav a.btn {
   padding: 10px 14px;
   border: 1px solid var(--accent-2);
-  border-radius: 999px;
+  border-radius: 14px;
   background: white;
   color: var(--accent-2);
   font-weight: 600;
@@ -120,12 +120,14 @@ h1, h2 {
 
 /* Search box in nav */
 .search input[type="search"] {
-  padding: 8px 12px;
+  padding: 12px 18px;
   border: 1px solid var(--stone);
-  border-radius: 999px;
+  border-radius: 14px;
   background: white;
   min-width: 220px;
   outline: none;
+  font-size: 16px;
+  line-height: 1.2;
 }
 
 .search input[type="search"]:focus {
@@ -160,7 +162,7 @@ h1, h2 {
   margin-bottom: 20px;
 }
 .hero h1 {
-  line-height: 1.08;
+  line-height: 1.7;
   margin: 16px 0 12px;
   font-size: clamp(26px, 4.6vw, 44px);
 }
