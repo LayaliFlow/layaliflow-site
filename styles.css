@@ -1,0 +1,271 @@
+@import url('https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;700&display=swap');
+@import url('https://fonts.cdnfonts.com/css/basmala');
+
+:root {
+  --bg: #f6f5f3;
+  --card: #ffffff;
+  --ink: #1f1f1f;
+  --muted: #6b6b6b;
+  --accent: #c7a36e;
+  --accent-2: #8b6b3e;
+  --stone: #e9e5dd;
+  --shadow: 0 10px 30px rgba(0,0,0,.08);
+  --radius: 20px;
+  --maxw: 1120px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.container {
+  max-width: var(--maxw);
+  margin: auto;
+  padding: 0 20px;
+}
+
+/* Arabic-inspired headings */
+h1, h2, h3, .brand span {
+  font-family: "Basmala", "Scheherazade New", serif;
+  font-weight: 700;
+  font-size: clamp(24px, 4vw, 42px);
+  letter-spacing: .5px;
+}
+
+.nav {
+  position: sticky;
+  top: 0;
+  background: rgba(246,245,243,.8);
+  backdrop-filter: saturate(150%) blur(8px);
+  border-bottom: 1px solid #eae6de;
+  z-index: 20;
+}
+
+.nav .inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+
+.brand {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-weight: 700;
+}
+
+/* Logo now uses PNG instead of LF square */
+.brand .logo img {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+
+.nav a.btn {
+  padding: 10px 14px;
+  border: 1px solid var(--accent-2);
+  border-radius: 999px;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 28px;
+  align-items: center;
+  padding: 64px 0;
+}
+
+.chip {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  border: 1px solid var(--stone);
+  background: white;
+  border-radius: 999px;
+  padding: 6px 12px;
+  color: #4b4b4b;
+  font-size: 14px;
+}
+
+.hero h1 {
+  line-height: 1.05;
+  margin: 16px 0 12px;
+  font-size: clamp(28px, 5vw, 48px);
+}
+
+.hero p {
+  font-size: 18px;
+  color: #494949;
+  max-width: 58ch;
+}
+
+.cta {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.btn-primary {
+  background: var(--accent-2);
+  color: white;
+  padding: 12px 18px;
+  border: none;
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  font-weight: 600;
+}
+
+.btn-ghost {
+  border: 1px solid var(--accent-2);
+  background: white;
+  color: var(--accent-2);
+  padding: 12px 18px;
+  border-radius: 14px;
+}
+
+.hero-card {
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: linear-gradient(180deg,#f0ece4, #e6dfd3);
+  box-shadow: var(--shadow);
+}
+
+.hero-card .img {
+  aspect-ratio: 4/5;
+  background: linear-gradient(135deg,#b8a992,#ece6da);
+  display: grid;
+  place-items: center;
+  color: white;
+  font-size: 40px;
+}
+
+.section {
+  padding: 56px 0;
+}
+
+.section .sub {
+  color: var(--muted);
+  margin-bottom: 28px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  border: 1px solid #eee6da;
+}
+
+.card .media {
+  aspect-ratio: 4/5;
+  background: linear-gradient(135deg,#d5c9b4,#efe9df);
+}
+
+.card .body {
+  padding: 16px;
+}
+
+.pill {
+  display: inline-flex;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #f0ebe2;
+  color: #6b5b3e;
+  font-size: 12px;
+}
+
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.faq details {
+  background: white;
+  border: 1px solid #eee6da;
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 12px;
+}
+
+.faq summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.faq p {
+  margin: 10px 0 0;
+  color: #4b4b4b;
+}
+
+form {
+  display: grid;
+  gap: 12px;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #ddd3c3;
+  border-radius: 12px;
+  background: white;
+}
+
+label {
+  font-size: 14px;
+  color: #555;
+}
+
+.footer {
+  margin-top: 40px;
+  border-top: 1px solid #eae6de;
+  padding: 28px 0;
+  color: #666;
+}
+
+@media (max-width: 960px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .two-col {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
