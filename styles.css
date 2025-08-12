@@ -38,7 +38,7 @@ h1, h2, .brand span {
   letter-spacing: .5px;
 }
 
-/* Product card titles back to original font */
+/* Product card titles */
 .card h3 {
   font-family: "Playfair Display", serif;
   font-weight: 700;
@@ -169,6 +169,12 @@ h1, h2, .brand span {
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
 }
+
+/* Featured pieces: 4 columns on large screens */
+#lookbook .grid {
+  grid-template-columns: repeat(4, 1fr);
+}
+
 .card {
   background: var(--card);
   border-radius: var(--radius);
@@ -179,7 +185,16 @@ h1, h2, .brand span {
 .card .media {
   aspect-ratio: 4/5;
   background: linear-gradient(135deg,#d5c9b4,#efe9df);
+  background-size: cover;
+  background-position: center;
 }
+
+/* Individual product images */
+.media.hoodie       { background-image: url("images/hoodie.jpg"); }
+.media.loose-top    { background-image: url("images/loose-top.jpg"); }
+.media.joggers      { background-image: url("images/joggers.jpg"); }
+.media.skirt-pants  { background-image: url("images/skirt-pants.jpg"); }
+
 .card .body { padding: 16px; }
 .pill {
   display: inline-flex;
