@@ -49,7 +49,7 @@ img {
 h1, h2, h3, .brand span {
   font-family: "Basmala", "Scheherazade New", serif;
   font-weight: 700;
-  font-size: clamp(24px, 4vw, 42px);
+  font-size: clamp(24px, 4vw, 40px);
   letter-spacing: .5px;
 }
 
@@ -76,12 +76,14 @@ h1, h2, h3, .brand span {
   font-weight: 700;
 }
 
-/* Logo now uses PNG instead of LF square */
 .brand .logo img {
   width: 36px;
   height: 36px;
   border-radius: 12px;
-  box-shadow: var(--shadow);
+  background: transparent;
+  display: grid;
+  place-items: center;
+  box-shadow: none;
 }
 
 .nav a.btn {
@@ -113,7 +115,7 @@ h1, h2, h3, .brand span {
 .hero h1 {
   line-height: 1.05;
   margin: 16px 0 12px;
-  font-size: clamp(28px, 5vw, 48px);
+  font-size: clamp(24px, 4vw, 40px);
 }
 
 .hero p {
