@@ -30,11 +30,19 @@ img { max-width: 100%; display: block; }
 
 .container { max-width: var(--maxw); margin: auto; padding: 0 20px; }
 
-/* Arabic-inspired headings (keep decorative for H1/H2) */
-h1, h2, .brand span {
+/* Arabic-inspired headings */
+h1, h2, {
   font-family: "Basmala", "Scheherazade New", serif;
   font-weight: 700;
   font-size: clamp(22px, 3.6vw, 36px);
+  letter-spacing: .5px;
+}
+
+/* LayaliFlow next to logo */
+.brand span {
+  font-family: "Basmala", "Scheherazade New", serif;
+  font-weight: 700;
+  font-size: clamp(16px, 2.4vw, 26px);
   letter-spacing: .5px;
 }
 
@@ -86,10 +94,48 @@ h1, h2, .brand span {
   display: block;
 }
 
+/* Nav actions wrapper (replaces inline styles) */
+.nav-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
 .nav a.btn {
   padding: 10px 14px;
   border: 1px solid var(--accent-2);
   border-radius: 999px;
+  background: white;
+  color: var(--accent-2);
+  font-weight: 600;
+  text-decoration: none;
+  transition: background .3s, color .3s;
+  box-shadow: var(--shadow);
+}
+
+.nav a.btn:hover {
+  background: var(--accent-2);
+  color: white;
+}
+
+/* Search box in nav */
+.search input[type="search"] {
+  padding: 8px 12px;
+  border: 1px solid var(--stone);
+  border-radius: 999px;
+  background: white;
+  min-width: 220px;
+  outline: none;
+}
+
+.search input[type="search"]:focus {
+  border-color: var(--accent-2);
+  box-shadow: 0 0 0 3px rgba(139,107,62,0.15);
+}
+
+@media (max-width: 640px) {
+.search input[type="search"] {
+  min-width: 140px;
 }
 
 /* Hero */

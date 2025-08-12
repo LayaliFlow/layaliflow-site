@@ -31,6 +31,9 @@
       <div style="display:flex;gap:10px;align-items:center">
         <a href="#lookbook" class="btn">Lookbook</a>
         <a href="#contact" class="btn" aria-label="Contact LayaliFlow">Contact</a>
+        <form class="search" role="search" aria-label="Site search" onsubmit="event.preventDefault();">
+          <input id="site-search" type="search" placeholder="Search pieces…" aria-label="Search featured pieces">
+        </form>
       </div>
     </div>
   </nav>
@@ -111,22 +114,22 @@
         <h2>Our story</h2>
         <p class="sub">Born in Montreal, inspired by movement and faith.</p>
         <p>
-          We build long‑lasting pieces with a modest cut and elegant lines. Our design language is earthy and calm—neutrals, soft drape, and clean details—so you feel composed in every rep.
+          We build long-lasting pieces with a modest cut and elegant lines. Our design language blends timeless elegance with functional comfort—soft drape, clean details, and a palette that evolves with the seasons—so you feel composed in every rep.
         </p>
         <ul>
           <li>Breathable, quick‑dry fabrics</li>
           <li>Opaque, squat‑proof leggings & skirt‑pants</li>
-          <li>Earth‑tone palette with gold accents</li>
+          <li>Thoughtfully curated colours with signature gold accents</li>
         </ul>
       </div>
       <div>
         <h2>Size & fit</h2>
         <p class="sub">Simple guidance that respects different preferences.</p>
         <div class="card" role="region" aria-label="Size tips" style="padding:16px">
-          <p><strong>Oversized tops:</strong> choose your usual size for loose drape. Size up for extra length or sleeve room.</p>
-          <p><strong>Skirt‑pants:</strong> waist true‑to‑size; outer skirt is A‑line for ease.
-          </p>
-          <p><strong>Hijab:</strong> standard length covers chest; sports pinless style available soon.</p>
+          <p><strong>Oversized Hoodie:</strong> choose your usual size for a roomy fit. Size up for extra length or sleeve space.</p>
+          <p><strong>Oversized Top:</strong> loose drape with dropped shoulders. Size up for added coverage and flow.</p>
+          <p><strong>Oversized Joggers:</strong> relaxed fit with closed ankles. Stick to your usual size for comfort; size up for extra looseness.</p>
+          <p><strong>A-Line Training Skirt-Pants:</strong> waist true-to-size; outer skirt is A-line for unrestricted movement.</p>
         </div>
       </div>
     </div>
@@ -211,6 +214,24 @@
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Search filter
+    (function(){
+      const input = document.getElementById('site-search');
+      if (!input) return;
+      const cards = Array.from(document.querySelectorAll('#lookbook .card'));
+      const getText = (el) => (el?.textContent || '').toLowerCase();
+      input.addEventListener('input', function () {
+        const q = this.value.trim().toLowerCase();
+        cards.forEach(card => {
+          const pill = getText(card.querySelector('.pill'));
+          const title = getText(card.querySelector('h3'));
+          const desc = getText(card.querySelector('.sub'));
+          const hit = !q || pill.includes(q) || title.includes(q) || desc.includes(q);
+          card.style.display = hit ? '' : 'none';
+        });
+      });
+    })();
   </script>
 </body>
 </html>
