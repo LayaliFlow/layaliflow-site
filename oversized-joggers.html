@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LayaliFlow — Oversized Joggers</title>
+  <meta name="description" content="LayaliFlow crafts elegant, modest sportswear with breathable fabrics and thoughtful silhouettes." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="LayaliFlow — Oversized Joggers" />
+  <meta property="og:description" content="Elegant, modest sportswear designed for movement and confidence." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://layaliflow.github.io/layaliflow-site/oversized-joggers.html" />
+  <meta property="og:image" content="https://layaliflow.github.io/layaliflow-site/images/crescent_logo.png" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="images/crescent_logo.png">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- NAV -->
+  <nav class="nav" role="navigation" aria-label="Primary">
+    <div class="container inner">
+      <a class="brand" href="index.html#home" aria-label="LayaliFlow Home">
+        <div class="logo">
+          <img src="images/crescent_logo.png" alt="LayaliFlow Logo">
+        </div>
+        <span>LayaliFlow</span>
+      </a>
+
+      <div class="nav-actions" role="group" aria-label="Primary actions">
+        <form class="search" role="search" aria-label="Site search" action="search.html" method="get">
+          <input id="site-search" name="q" type="search" placeholder="Search pieces…" aria-label="Search featured pieces">
+        </form>
+
+        <!-- Icon buttons -->
+        <button class="icon-btn" id="shopBtn" aria-label="Shop" aria-haspopup="dialog" aria-controls="shopDrawer" aria-expanded="false">
+          <!-- Bag icon -->
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2l1.5 4h9L18 2H6zM3 6h18v14H3V6z"/>
+          </svg>
+        </button>
+
+        <button class="icon-btn" aria-label="Cart">
+          <!-- Cart icon -->
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="9" cy="21" r="1"/>
+            <circle cx="20" cy="21" r="1"/>
+            <path d="M1 1h4l3.6 7.59L5.25 14H19a1 1 0 0 0 .96-.74L23 4H6"/>
+          </svg>
+          <span class="cart-badge">0</span>
+        </button>
+
+        <button class="icon-btn" id="menuBtn" aria-label="Menu" aria-haspopup="dialog" aria-controls="menuDrawer" aria-expanded="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3 6h18M3 12h18M3 18h18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PRODUCT -->
+  <section class="product-page">
+    <div class="container product-main two-col">
+
+      <!-- Gallery (left) -->
+      <div class="product-gallery">
+        <div class="gallery-stage" aria-live="polite">
+          <img src="images/oversized-joggers.png" alt="Oversized Joggers — front view" class="stage-img is-active">
+          <img src="images/oversized-joggers.png" alt="Oversized Joggers — side view" class="stage-img">
+          <img src="images/oversized-joggers.png" alt="Oversized Joggers — detail view" class="stage-img">
+          <button class="gallery-nav prev" aria-label="Previous image">❮</button>
+          <button class="gallery-nav next" aria-label="Next image">❯</button>
+        </div>
+
+        <div class="gallery-thumbs" role="group" aria-label="Gallery thumbnails">
+          <button class="thumb is-active" aria-label="Front image">
+            <img src="images/oversized-joggers.png" alt="">
+          </button>
+          <button class="thumb" aria-label="Side image">
+            <img src="images/oversized-joggers.png" alt="">
+          </button>
+          <button class="thumb" aria-label="Detail image">
+            <img src="images/oversized-joggers.png" alt="">
+          </button>
+        </div>
+      </div>
+
+      <!-- Info (right) -->
+      <div class="product-info">
+        <h1>Oversized Joggers</h1>
+        <p class="price">$— CAD</p> <!-- TODO: set price -->
+
+        <!-- Colors -->
+        <div class="product-option">
+          <div class="label-row">
+            <span class="label">Color:</span>
+            <span class="value">Black</span>
+          </div>
+          <div class="swatches">
+            <div class="swatch">
+              <input checked id="color-black" name="color" type="radio" value="Black">
+              <label for="color-black" title="Black" style="--swatch:#121417"></label>
+            </div>
+            <div class="swatch">
+              <input id="color-oat" name="color" type="radio" value="Oat">
+              <label for="color-oat" title="Oat" style="--swatch:#e9e5dd"></label>
+            </div>
+            <div class="swatch">
+              <input id="color-greige" name="color" type="radio" value="Greige">
+              <label for="color-greige" title="Greige" style="--swatch:#a79f95"></label>
+            </div>
+            <div class="swatch">
+              <input id="color-terracotta" name="color" type="radio" value="Terracotta">
+              <label for="color-terracotta" title="Terracotta" style="--swatch:#8b4a36"></label>
+            </div>
+            <div class="swatch">
+              <input id="color-navy" name="color" type="radio" value="Navy">
+              <label for="color-navy" title="Navy" style="--swatch:#1b2540"></label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sizes -->
+        <div class="product-option">
+          <span class="label">Size:</span>
+          <div class="sizes">
+            <label class="size"><input type="radio" name="size" value="XS"><span>XS</span></label>
+            <label class="size"><input type="radio" name="size" value="S"><span>S</span></label>
+            <label class="size"><input type="radio" name="size" value="M"><span>M</span></label>
+            <label class="size"><input type="radio" name="size" value="L"><span>L</span></label>
+            <label class="size"><input type="radio" name="size" value="XL"><span>XL</span></label>
+            <label class="size"><input type="radio" name="size" value="2XL"><span>2XL</span></label>
+            <label class="size"><input type="radio" name="size" value="3XL"><span>3XL</span></label>
+          </div>
+        </div>
+
+        <div class="fit-links">
+          <a href="#" class="muted-link">Size Chart</a>
+          <a href="#" class="muted-link">Find your perfect fit</a>
+        </div>
+
+        <button class="btn-primary add-to-cart">Add to Cart</button>
+
+        <p class="description">
+          Wide‑leg, relaxed joggers with closed ankles and breathable fabric—made for all‑day comfort and modest movement.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Drawers -->
+  <div class="drawer-backdrop" id="drawerBackdrop" hidden></div>
+
+  <aside class="drawer" id="menuDrawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle" hidden>
+    <header class="drawer-header">
+      <h2 id="drawerTitle">Menu</h2>
+      <button class="drawer-close" data-drawer-close aria-label="Close menu">&times;</button>
+    </header>
+
+    <nav class="drawer-nav" aria-label="Secondary">
+      <a href="index.html#about">About</a>
+      <a href="index.html#lookbook">Shop / Lookbook</a>
+      <a href="index.html#faq">FAQ</a>
+      <a href="privacy.html">Privacy</a>
+      <hr>
+      <a href="account.html">Account details</a>
+      <a href="signin.html">Sign in</a>
+      <a href="settings.html">Settings</a>
+    </nav>
+  </aside>
+
+  <aside class="drawer" id="shopDrawer" role="dialog" aria-modal="true" aria-labelledby="shopDrawerTitle" hidden>
+    <header class="drawer-header">
+      <h2 id="shopDrawerTitle">Shop</h2>
+      <button class="drawer-close" data-drawer-close aria-label="Close shop">&times;</button>
+    </header>
+
+    <nav class="drawer-nav" aria-label="Shop categories">
+      <details>
+        <summary>Tops</summary>
+        <div class="drawer-links">
+          <a href="hoodie.html">Turtleneck Hoodie</a>
+          <a href="loose-top.html">Long‑sleeve Top</a>
+        </div>
+      </details>
+
+      <details>
+        <summary>Bottoms</summary>
+        <div class="drawer-links">
+          <a href="skirt-pants.html">A‑Line Skirt‑Pants</a>
+          <a href="oversized-joggers.html">Oversized Joggers</a>
+        </div>
+      </details>
+
+      <details>
+        <summary>Accessories</summary>
+        <div class="drawer-links">
+          <a href="index.html#about">Coming soon</a>
+        </div>
+      </details>
+
+      <hr>
+
+      <a href="index.html#lookbook">All featured pieces</a>
+      <a href="search.html?q=new">New arrivals</a>
+      <a href="search.html?q=sale">Sale</a>
+    </nav>
+  </aside>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container" style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap">
+      <small>© <span id="year"></span> LayaliFlow. All rights reserved.</small>
+      <div style="display:flex;gap:14px">
+        <a href="https://www.instagram.com/layali.flow/" target="_blank" rel="noreferrer" aria-label="Instagram">Instagram</a>
+        <a href="mailto:flow.layali@gmail.com?subject=Inquiry%20from%20LayaliFlow%20Website" rel="noreferrer" aria-label="Email">flow.layali@gmail.com</a>
+        <a href="privacy.html" aria-label="Privacy">Privacy</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Drawers
+    (function () {
+      const backdrop = document.getElementById('drawerBackdrop');
+
+      const drawers = {
+        menu: { button: document.getElementById('menuBtn'), panel: document.getElementById('menuDrawer') },
+        shop: { button: document.getElementById('shopBtn'), panel: document.getElementById('shopDrawer') }
+      };
+
+      function openDrawer(key) {
+        const { button, panel } = drawers[key];
+        Object.values(drawers).forEach(({panel:p}) => p.removeAttribute('open'));
+        panel.hidden = false;
+        backdrop.hidden = false;
+        requestAnimationFrame(() => panel.setAttribute('open',''));
+        button.setAttribute('aria-expanded','true');
+        const firstLink = panel.querySelector('a, button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+        setTimeout(() => (firstLink ? firstLink.focus() : panel.querySelector('[data-drawer-close]')?.focus()), 10);
+      }
+
+      function closeAll() {
+        Object.values(drawers).forEach(({button, panel}) => {
+          panel.removeAttribute('open');
+          button.setAttribute('aria-expanded','false');
+          setTimeout(() => { panel.hidden = true; }, 200);
+        });
+        backdrop.hidden = true;
+      }
+
+      drawers.menu.button.addEventListener('click', () => openDrawer('menu'));
+      drawers.shop.button.addEventListener('click', () => openDrawer('shop'));
+
+      backdrop.addEventListener('click', closeAll);
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAll(); });
+      document.querySelectorAll('[data-drawer-close]').forEach(btn => btn.addEventListener('click', closeAll));
+      document.querySelectorAll('.drawer a').forEach(a => a.addEventListener('click', closeAll));
+    })();
+
+    // Gallery (toggle arrows at ends)
+    (function(){
+      const stageImgs = Array.from(document.querySelectorAll('.stage-img'));
+      const thumbs = Array.from(document.querySelectorAll('.thumb'));
+      const prevBtn = document.querySelector('.gallery-nav.prev');
+      const nextBtn = document.querySelector('.gallery-nav.next');
+      let currentIndex = 0;
+
+      function updateGallery(index) {
+        currentIndex = Math.max(0, Math.min(index, stageImgs.length - 1));
+        stageImgs.forEach((img, i) => img.classList.toggle('is-active', i === currentIndex));
+        thumbs.forEach((th, i) => th.classList.toggle('is-active', i === currentIndex));
+
+        prevBtn.style.display = currentIndex === 0 ? 'none' : 'block';
+        nextBtn.style.display = currentIndex === stageImgs.length - 1 ? 'none' : 'block';
+      }
+
+      prevBtn.addEventListener('click', () => updateGallery(currentIndex - 1));
+      nextBtn.addEventListener('click', () => updateGallery(currentIndex + 1));
+      thumbs.forEach((thumb, i) => thumb.addEventListener('click', () => updateGallery(i)));
+
+      updateGallery(0);
+    })();
+  </script>
+</body>
+</html>
