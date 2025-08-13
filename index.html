@@ -29,14 +29,36 @@
         <span>LayaliFlow</span>
       </a>
 
-      <!-- Search + buttons -->
-    <div class="nav-actions" style="gap:8px" role="search">
-      <form class="search" aria-label="Site search" onsubmit="event.preventDefault();">
-        <input id="site-search" type="search" placeholder="Search pieces…" aria-label="Search featured pieces">
-      </form>
-      <a href="#lookbook" class="btn">Lookbook</a>
-      <a href="#contact" class="btn" aria-label="Contact LayaliFlow">Contact</a>
-    </div>
+      <!-- Search -->
+      <div class="nav-actions" role="group" aria-label="Primary actions">
+        <form class="search" role="search" aria-label="Site search" action="search.html">
+          <input id="site-search" name="q" type="search" placeholder="Search pieces…" aria-label="Search featured pieces">
+        </form>
+
+        <!-- Icon buttons -->
+        <button class="icon-btn" id="shopBtn" aria-label="Shop">
+          <!-- Bag icon -->
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2l1.5 4h9L18 2H6zM3 6h18v14H3V6z"/>
+          </svg>
+        </button>
+
+        <button class="icon-btn" aria-label="Cart">
+          <!-- Cart icon -->
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="9" cy="21" r="1"/>
+            <circle cx="20" cy="21" r="1"/>
+            <path d="M1 1h4l3.6 7.59L5.25 14H19a1 1 0 0 0 .96-.74L23 4H6"/>
+          </svg>
+          <span class="cart-badge">0</span>
+        </button>
+
+        <button class="icon-btn" id="menuBtn" aria-label="Menu" aria-haspopup="dialog" aria-controls="menuDrawer" aria-expanded="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3 6h18M3 12h18M3 18h18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
     </div>
   </nav>
 
@@ -203,6 +225,68 @@
     </div>
   </section>
 
+  <!-- Side drawer + backdrop -->
+  <div class="drawer-backdrop" id="drawerBackdrop" hidden></div>
+
+  <aside class="drawer" id="menuDrawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle" hidden>
+    <header class="drawer-header">
+      <h2 id="drawerTitle">Menu</h2>
+      <button class="drawer-close" data-drawer-close aria-label="Close menu">&times;</button>
+    </header>
+
+    <nav class="drawer-nav" aria-label="Secondary">
+      <a href="index.html#about">About</a>
+      <a href="index.html#lookbook">Shop / Lookbook</a>
+      <a href="index.html#faq">FAQ</a>
+      <a href="privacy.html">Privacy</a>
+      <hr>
+      <a href="account.html">Account details</a>
+      <a href="signin.html">Sign in</a>
+      <a href="settings.html">Settings</a>
+    </nav>
+  </aside>
+
+  <!-- SHOP drawer -->
+  <aside class="drawer" id="shopDrawer" role="dialog" aria-modal="true" aria-labelledby="shopDrawerTitle" hidden>
+    <header class="drawer-header">
+      <h2 id="shopDrawerTitle">Shop</h2>
+      <button class="drawer-close" data-drawer-close aria-label="Close shop">&times;</button>
+    </header>
+
+    <nav class="drawer-nav" aria-label="Shop categories">
+      <!-- Simple, accessible accordions using <details> -->
+      <details>
+        <summary>Tops</summary>
+        <div class="drawer-links">
+          <a href="index.html#lookbook" data-filter="hoodie">Turtleneck Hoodie</a>
+          <a href="index.html#lookbook" data-filter="top">Long‑sleeve Top</a>
+        </div>
+      </details>
+
+      <details>
+        <summary>Bottoms</summary>
+        <div class="drawer-links">
+          <a href="index.html#lookbook" data-filter="skirt-pants">A‑Line Skirt‑Pants</a>
+          <a href="index.html#lookbook" data-filter="joggers">Oversized Joggers</a>
+        </div>
+      </details>
+
+      <details>
+        <summary>Accessories</summary>
+        <div class="drawer-links">
+          <a href="index.html#about">Coming soon</a>
+        </div>
+      </details>
+
+      <hr>
+
+      <a href="index.html#lookbook">All featured pieces</a>
+      <a href="search.html?q=new">New arrivals</a>
+      <a href="search.html?q=sale">Sale</a>
+    </nav>
+  </aside>
+
+
   <!-- FOOTER -->
   <footer class="footer">
     <div class="container" style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap">
@@ -218,21 +302,55 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Search filter
-    (function(){
-      const input = document.getElementById('site-search');
-      if (!input) return;
-      const cards = Array.from(document.querySelectorAll('#lookbook .card'));
-      const getText = (el) => (el?.textContent || '').toLowerCase();
-      input.addEventListener('input', function () {
-        const q = this.value.trim().toLowerCase();
-        cards.forEach(card => {
-          const pill = getText(card.querySelector('.pill'));
-          const title = getText(card.querySelector('h3'));
-          const desc = getText(card.querySelector('.sub'));
-          const hit = !q || pill.includes(q) || title.includes(q) || desc.includes(q);
-          card.style.display = hit ? '' : 'none';
+    (function () {
+      const backdrop = document.getElementById('drawerBackdrop');
+
+      const drawers = {
+        menu:  {
+          button: document.getElementById('menuBtn'),
+          panel:  document.getElementById('menuDrawer')
+        },
+        shop:  {
+          button: document.getElementById('shopBtn'),
+          panel:  document.getElementById('shopDrawer')
+        }
+      };
+
+      function openDrawer(key) {
+        const { button, panel } = drawers[key];
+        // Close any open drawer first
+        Object.values(drawers).forEach(({panel:p}) => p.removeAttribute('open'));
+        // reveal + animate current
+        panel.hidden = false;
+        backdrop.hidden = false;
+        requestAnimationFrame(() => panel.setAttribute('open',''));
+        button.setAttribute('aria-expanded','true');
+        // focus
+        const firstLink = panel.querySelector('a, button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+        setTimeout(() => (firstLink ? firstLink.focus() : panel.querySelector('[data-drawer-close]')?.focus()), 10);
+      }
+
+      function closeAll() {
+        Object.values(drawers).forEach(({button, panel}) => {
+          panel.removeAttribute('open');
+          button.setAttribute('aria-expanded','false');
+          setTimeout(() => { panel.hidden = true; }, 200);
         });
+        backdrop.hidden = true;
+      }
+
+      // Wire buttons
+      drawers.menu.button.addEventListener('click', () => openDrawer('menu'));
+      drawers.shop.button.addEventListener('click', () => openDrawer('shop'));
+
+      // Close handlers
+      backdrop.addEventListener('click', closeAll);
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAll(); });
+      document.querySelectorAll('[data-drawer-close]').forEach(btn => btn.addEventListener('click', closeAll));
+
+      // Optional: if a drawer link points to index sections, close after click
+      document.querySelectorAll('.drawer a').forEach(a => {
+        a.addEventListener('click', () => { closeAll(); });
       });
     })();
   </script>

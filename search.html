@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Search — LayaliFlow</title>
+  <link rel="icon" type="image/png" href="images/crescent_logo.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- NAV -->
+  <nav class="nav" role="navigation" aria-label="Primary">
+    <div class="container inner">
+      <a class="brand" href="index.html#home" aria-label="LayaliFlow Home">
+        <div class="logo">
+          <img src="images/crescent_logo.png" alt="LayaliFlow Logo">
+        </div>
+        <span>LayaliFlow</span>
+      </a>
+
+      <!-- Search + buttons -->
+    <div class="nav-actions" style="gap:8px" role="search">
+      <form class="search" role="search" aria-label="Site search"
+            action="search.html" method="get">
+        <input id="site-search" type="search" name="q"
+              placeholder="Search pieces…" aria-label="Search featured pieces">
+      </form>
+      <a href="index.html#lookbook" class="btn">Lookbook</a>
+      <a href="index.html#contact" class="btn" aria-label="Contact LayaliFlow">Contact</a>
+    </div>
+    </div>
+  </nav>
+
+  <main class="section">
+    <div class="container">
+      <h1 style="margin-bottom:8px">Search</h1>
+      <p class="sub" id="search-sub"></p>
+
+      <div id="results" class="grid" role="list"></div>
+
+      <div id="no-results" style="display:none; margin-top:20px">
+        <p>No matches found. Try another term or browse the <a href="index.html#lookbook">featured pieces</a>.</p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container" style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap">
+      <small>© <span id="year"></span> LayaliFlow. All rights reserved.</small>
+      <div style="display:flex;gap:14px">
+        <a href="https://www.instagram.com/layali.flow/" target="_blank" rel="noreferrer" aria-label="Instagram">Instagram</a>
+        <a href="mailto:flow.layali@gmail.com?subject=Inquiry%20from%20LayaliFlow%20Website" rel="noreferrer" aria-label="Email">flow.layali@gmail.com</a>
+        <a href="privacy.html" aria-label="Privacy">Privacy</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Catalog
+    const catalog = [
+      {
+        title: 'Turtleneck Hoodie',
+        tag: 'Hoodie',
+        desc: 'Mid-thigh length with wide hood. Breathable, cozy coverage.',
+        url: 'hoodie.html',
+        img: 'images/hoodie.png'
+      },
+      {
+        title: 'Long-sleeve Top',
+        tag: 'Training Top',
+        desc: 'Loose fit with arm sleeves. Airy, stretch-friendly comfort.',
+        url: 'top.html',
+        img: 'images/loose-top.jpg'
+      },
+      {
+        title: 'Oversized Joggers',
+        tag: 'Joggers',
+        desc: 'Wide-leg fit with top-opening pockets. Breathable, all-day wear.',
+        url: 'joggers.html',
+        img: 'images/joggers.jpg'
+      },
+      {
+        title: 'A‑Line Training Skirt‑Pants',
+        tag: 'Skirt‑Pants',
+        desc: 'Flowy outer skirt with straight under‑leggings. Breathable, squat‑proof.',
+        url: 'skirt-pants.html',
+        img: 'images/skirt-pants.jpg'
+      }
+    ];
+
+    // --- Get query param
+    const params = new URLSearchParams(location.search);
+    const q = (params.get('q') || '').trim();
+    const sub = document.getElementById('search-sub');
+    const resultsEl = document.getElementById('results');
+    const noResultsEl = document.getElementById('no-results');
+
+    // prefill search box in nav
+    const navInput = document.getElementById('site-search');
+    if (navInput) navInput.value = q;
+
+    function norm(s){ return (s||'').toLowerCase(); }
+
+    const matches = !q ? [] : catalog.filter(item => {
+      const hay = `${item.title} ${item.tag} ${item.desc}`.toLowerCase();
+      return hay.includes(q.toLowerCase());
+    });
+
+    sub.textContent = q
+      ? `${matches.length} result${matches.length===1?'':'s'} for “${q}”`
+      : 'Type in the search box above.';
+
+    if (!q || matches.length === 0) {
+      noResultsEl.style.display = q ? 'block' : 'none';
+    }
+
+    // render results as cards
+    matches.forEach(item => {
+      const a = document.createElement('a');
+      a.className = 'card';
+      a.href = item.url;
+      a.role = 'listitem';
+      a.innerHTML = `
+        <div class="media" style="background-image:url('${item.img}'); background-size:cover; background-position:center;"></div>
+        <div class="body">
+          <div class="pill">${item.tag}</div>
+          <h3 style="margin:8px 0 6px">${item.title}</h3>
+          <p class="sub">${item.desc}</p>
+        </div>
+      `;
+      resultsEl.appendChild(a);
+    });
+  </script>
+</body>
+</html>
