@@ -3,7 +3,16 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Search — LayaliFlow</title>
+  <title>LayaliFlow — Search</title>
+  <meta name="description" content="Learn more about LayaliFlow: our story, design philosophy, and what modest activewear means to us." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="LayaliFlow — Search" />
+  <meta property="og:description" content="Learn more about LayaliFlow: our story, design philosophy, and what modest activewear means to us." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://layaliflow.github.io/layaliflow-site/about.html" />
+  <meta property="og:image" content="https://layaliflow.github.io/layaliflow-site/images/crescent_logo.png" />
+
   <link rel="icon" type="image/png" href="images/crescent_logo.png">
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -12,22 +21,37 @@
   <nav class="nav" role="navigation" aria-label="Primary">
     <div class="container inner">
       <a class="brand" href="index.html#home" aria-label="LayaliFlow Home">
-        <div class="logo">
-          <img src="images/crescent_logo.png" alt="LayaliFlow Logo">
-        </div>
+        <div class="logo"><img src="images/crescent_logo.png" alt="LayaliFlow Logo"></div>
         <span>LayaliFlow</span>
       </a>
 
-      <!-- Search + buttons -->
-    <div class="nav-actions" style="gap:8px" role="search">
-      <form class="search" role="search" aria-label="Site search"
-            action="search.html" method="get">
-        <input id="site-search" type="search" name="q"
-              placeholder="Search pieces…" aria-label="Search featured pieces">
-      </form>
-      <a href="index.html#lookbook" class="btn">Lookbook</a>
-      <a href="index.html#contact" class="btn" aria-label="Contact LayaliFlow">Contact</a>
-    </div>
+      <div class="nav-actions" role="group" aria-label="Primary actions">
+        <form class="search" role="search" aria-label="Site search" action="search.html" method="get">
+          <input id="site-search" name="q" type="search" placeholder="Search pieces…" aria-label="Search featured pieces">
+        </form>
+
+        <button class="icon-btn" id="shopBtn" aria-label="Shop" aria-haspopup="dialog" aria-controls="shopDrawer" aria-expanded="false">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2l1.5 4h9L18 2H6zM3 6h18v14H3V6z"/>
+          </svg>
+        </button>
+
+        <button class="icon-btn" id="cartBtn" aria-label="Cart" aria-haspopup="dialog" aria-controls="cartDrawer" aria-expanded="false">
+          <!-- Cart icon -->
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="9" cy="21" r="1"/>
+            <circle cx="20" cy="21" r="1"/>
+            <path d="M1 1h4l3.6 7.59L5.25 14H19a1 1 0 0 0 .96-.74L23 4H6"/>
+          </svg>
+          <span class="cart-badge">0</span>
+        </button>
+
+        <button class="icon-btn" id="menuBtn" aria-label="Menu" aria-haspopup="dialog" aria-controls="menuDrawer" aria-expanded="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3 6h18M3 12h18M3 18h18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
     </div>
   </nav>
 
@@ -39,10 +63,98 @@
       <div id="results" class="grid" role="list"></div>
 
       <div id="no-results" style="display:none; margin-top:20px">
-        <p>No matches found. Try another term or browse the <a href="index.html#lookbook">featured pieces</a>.</p>
+        <p>No matches found. Try another term or browse <a href="lookbook.html" style="color: #c7a36e;">all products</a>.</p>
       </div>
     </div>
   </main>
+
+  <!-- DRAWERS (same as other pages) -->
+  <div class="drawer-backdrop" id="drawerBackdrop" hidden></div>
+
+  <aside class="drawer" id="menuDrawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle" hidden>
+    <header class="drawer-header">
+      <h2 id="drawerTitle">Menu</h2>
+      <button class="drawer-close" data-drawer-close aria-label="Close menu">&times;</button>
+    </header>
+    <nav class="drawer-nav" aria-label="Secondary">
+      <a href="about.html">About</a>
+      <a href="index.html#faq">FAQ</a>
+      <a href="privacy.html">Privacy</a>
+      <hr>
+      <a href="account.html">Account details</a>
+      <a href="signin.html">Sign in</a>
+      <a href="settings.html">Settings</a>
+    </nav>
+  </aside>
+
+  <aside class="drawer" id="shopDrawer" role="dialog" aria-modal="true" aria-labelledby="shopDrawerTitle" hidden>
+    <header class="drawer-header">
+      <h2 id="shopDrawerTitle">Shop</h2>
+      <button class="drawer-close" data-drawer-close aria-label="Close shop">&times;</button>
+    </header>
+    <nav class="drawer-nav" aria-label="Shop categories">
+      <details>
+        <summary>Tops</summary>
+        <div class="drawer-links">
+          <a href="hoodie.html">Turtleneck Hoodie</a>
+          <a href="long-sleeve-top.html">Long‑sleeve Top</a>
+        </div>
+      </details>
+      <details>
+        <summary>Bottoms</summary>
+        <div class="drawer-links">
+          <a href="skirt-pants.html">A‑Line Skirt‑Pants</a>
+          <a href="oversized-joggers.html">Oversized Joggers</a>
+        </div>
+      </details>
+      <details>
+        <summary>Accessories</summary>
+        <div class="drawer-links">
+          <a href="#">Coming soon</a>
+        </div>
+      </details>
+      <hr>
+      <a href="lookbook.html">All products</a>
+      <a href="search.html?q=new">New arrivals</a>
+      <a href="search.html?q=sale">Sale</a>
+    </nav>
+  </aside>
+
+  <aside class="drawer" id="cartDrawer" role="dialog" aria-modal="true" aria-labelledby="cartDrawerTitle" hidden>
+    <header class="drawer-header">
+      <h2 id="cartDrawerTitle">Your bag</h2>
+      <button class="drawer-close" data-drawer-close aria-label="Close cart">&times;</button>
+    </header>
+
+    <div class="cart-body">
+      <!-- Empty state -->
+      <div class="cart-empty" id="cartEmpty" hidden>
+        <div class="bag-illus" aria-hidden="true">🛍️</div>
+        <h3>Your bag is empty</h3>
+        <p class="sub">There are no products in your bag</p>
+        <a class="btn-primary cart-cta" href="lookbook.html">Shop all products</a>
+        <a class="muted-link cart-login" href="signin.html">Sign in to your account</a>
+      </div>
+
+      <!-- Populated state -->
+      <div class="cart-has-items" id="cartHasItems" hidden>
+        <ul class="cart-list" id="cartList" aria-label="Cart items"></ul>
+
+        <div class="cart-summary">
+          <div class="row">
+            <span>Subtotal</span>
+            <strong id="cartSubtotal">$0.00</strong>
+          </div>
+          <p class="tiny sub">Taxes and shipping calculated at checkout.</p>
+          <div class="actions">
+            <a class="btn-ghost" href="lookbook.html">Shop all products</a>
+            <button class="btn-primary" id="checkoutBtn" disabled>Checkout</button>
+          </div>
+          <a class="muted-link cart-login" href="signin.html">Sign in to your account</a>
+        </div>
+      </div>
+    </div>
+  </aside>
 
   <footer class="footer">
     <div class="container" style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap">
@@ -58,80 +170,86 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Catalog
+    // Catalog (filenames/links consistent with your repo)
     const catalog = [
-      {
-        title: 'Turtleneck Hoodie',
-        tag: 'Hoodie',
-        desc: 'Mid-thigh length with wide hood. Breathable, cozy coverage.',
-        url: 'hoodie.html',
-        img: 'images/hoodie.png'
-      },
-      {
-        title: 'Long-sleeve Top',
-        tag: 'Training Top',
-        desc: 'Loose fit with arm sleeves. Airy, stretch-friendly comfort.',
-        url: 'top.html',
-        img: 'images/loose-top.jpg'
-      },
-      {
-        title: 'Oversized Joggers',
-        tag: 'Joggers',
-        desc: 'Wide-leg fit with top-opening pockets. Breathable, all-day wear.',
-        url: 'joggers.html',
-        img: 'images/joggers.jpg'
-      },
-      {
-        title: 'A‑Line Training Skirt‑Pants',
-        tag: 'Skirt‑Pants',
-        desc: 'Flowy outer skirt with straight under‑leggings. Breathable, squat‑proof.',
-        url: 'skirt-pants.html',
-        img: 'images/skirt-pants.jpg'
-      }
+      { title:'Turtleneck Hoodie', tag:'Hoodie',
+        desc:'Mid-thigh length with wide hood. Breathable, cozy coverage.',
+        url:'hoodie.html', img:'images/hoodie.png' },
+      { title:'Long-sleeve Top', tag:'Training Top',
+        desc:'Loose fit with arm sleeves. Airy, stretch-friendly comfort.',
+        url:'long-sleeve-top.html', img:'images/long-sleeve-top.png' },
+      { title:'Oversized Joggers', tag:'Joggers',
+        desc:'Wide-leg fit with top-opening pockets. Breathable, all-day wear.',
+        url:'oversized-joggers.html', img:'images/oversized-joggers.png' },
+      { title:'A‑Line Training Skirt‑Pants', tag:'Skirt‑Pants',
+        desc:'Flowy outer skirt with straight under‑leggings. Breathable, squat‑proof.',
+        url:'skirt-pants.html', img:'images/skirt-pants.png' }
     ];
 
-    // --- Get query param
+    // Query + render
     const params = new URLSearchParams(location.search);
     const q = (params.get('q') || '').trim();
     const sub = document.getElementById('search-sub');
     const resultsEl = document.getElementById('results');
     const noResultsEl = document.getElementById('no-results');
 
-    // prefill search box in nav
     const navInput = document.getElementById('site-search');
     if (navInput) navInput.value = q;
 
-    function norm(s){ return (s||'').toLowerCase(); }
+    const matches = q
+      ? catalog.filter(item => (`${item.title} ${item.tag} ${item.desc}`).toLowerCase().includes(q.toLowerCase()))
+      : [];
 
-    const matches = !q ? [] : catalog.filter(item => {
-      const hay = `${item.title} ${item.tag} ${item.desc}`.toLowerCase();
-      return hay.includes(q.toLowerCase());
-    });
+    sub.textContent = q ? `${matches.length} result${matches.length===1?'':'s'} for “${q}”`
+                        : 'Type in the search box above.';
 
-    sub.textContent = q
-      ? `${matches.length} result${matches.length===1?'':'s'} for “${q}”`
-      : 'Type in the search box above.';
+    if (!q || matches.length === 0) noResultsEl.style.display = q ? 'block' : 'none';
 
-    if (!q || matches.length === 0) {
-      noResultsEl.style.display = q ? 'block' : 'none';
-    }
-
-    // render results as cards
     matches.forEach(item => {
       const a = document.createElement('a');
       a.className = 'card';
       a.href = item.url;
       a.role = 'listitem';
       a.innerHTML = `
-        <div class="media" style="background-image:url('${item.img}'); background-size:cover; background-position:center;"></div>
+        <img class="media" src="${item.img}" alt="${item.title}">
         <div class="body">
           <div class="pill">${item.tag}</div>
           <h3 style="margin:8px 0 6px">${item.title}</h3>
           <p class="sub">${item.desc}</p>
-        </div>
-      `;
+        </div>`;
       resultsEl.appendChild(a);
     });
+
+    // Drawers
+    (function () {
+      const backdrop = document.getElementById('drawerBackdrop');
+      const drawers = {
+        menu: { button: document.getElementById('menuBtn'), panel: document.getElementById('menuDrawer') },
+        shop: { button: document.getElementById('shopBtn'), panel: document.getElementById('shopDrawer') }
+      };
+      function openDrawer(key) {
+        const { button, panel } = drawers[key];
+        Object.values(drawers).forEach(({panel:p}) => p.removeAttribute('open'));
+        panel.hidden = false; backdrop.hidden = false;
+        requestAnimationFrame(() => panel.setAttribute('open',''));
+        button.setAttribute('aria-expanded','true');
+        const first = panel.querySelector('a,button,[href],input,select,textarea,[tabindex]:not([tabindex="-1"])');
+        setTimeout(() => (first ? first.focus() : panel.querySelector('[data-drawer-close]')?.focus()), 10);
+      }
+      function closeAll() {
+        Object.values(drawers).forEach(({button, panel}) => {
+          panel.removeAttribute('open'); button.setAttribute('aria-expanded','false');
+          setTimeout(() => { panel.hidden = true; }, 200);
+        });
+        backdrop.hidden = true;
+      }
+      drawers.menu.button.addEventListener('click', () => openDrawer('menu'));
+      drawers.shop.button.addEventListener('click', () => openDrawer('shop'));
+      backdrop.addEventListener('click', closeAll);
+      document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAll(); });
+      document.querySelectorAll('[data-drawer-close]').forEach(btn => btn.addEventListener('click', closeAll));
+      document.querySelectorAll('.drawer a').forEach(a => a.addEventListener('click', closeAll));
+    })();
   </script>
 </body>
 </html>

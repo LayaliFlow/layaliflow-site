@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>LayaliFlow — Turtleneck Hoodie</title>
-  <meta name="description" content="LayaliFlow crafts elegant, modest sportswear with breathable fabrics and thoughtful silhouettes." />
+  <title>LayaliFlow — About Us</title>
+  <meta name="description" content="Learn more about LayaliFlow: our story, design philosophy, and what modest activewear means to us." />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="LayaliFlow — Turtleneck Hoodie" />
-  <meta property="og:description" content="Elegant, modest sportswear designed for movement and confidence." />
+  <meta property="og:title" content="LayaliFlow — About Us" />
+  <meta property="og:description" content="Learn more about LayaliFlow: our story, design philosophy, and what modest activewear means to us." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://layaliflow.github.io/layaliflow-site/hoodie.html" />
+  <meta property="og:url" content="https://layaliflow.github.io/layaliflow-site/about.html" />
   <meta property="og:image" content="https://layaliflow.github.io/layaliflow-site/images/crescent_logo.png" />
 
   <link rel="icon" type="image/png" href="images/crescent_logo.png">
@@ -32,7 +32,7 @@
           <input id="site-search" name="q" type="search" placeholder="Search pieces…" aria-label="Search featured pieces">
         </form>
 
-        <!-- Icon buttons (match index.html) -->
+        <!-- Icon buttons -->
         <button class="icon-btn" id="shopBtn" aria-label="Shop" aria-haspopup="dialog" aria-controls="shopDrawer" aria-expanded="false">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M6 2l1.5 4h9L18 2H6zM3 6h18v14H3V6z"/>
@@ -45,7 +45,6 @@
             <circle cx="20" cy="21" r="1"/>
             <path d="M1 1h4l3.6 7.59L5.25 14H19a1 1 0 0 0 .96-.74L23 4H6"/>
           </svg>
-          <!-- add an id so the badge updates -->
           <span class="cart-badge" id="cartBadge">0</span>
         </button>
 
@@ -58,96 +57,48 @@
     </div>
   </nav>
 
-  <!-- PRODUCT -->
-  <section class="product-page">
-    <div class="container product-main two-col">
+  <!-- MAIN -->
+  <main class="container section">
+    <h1>About LayaliFlow</h1>
+    <p class="sub">Born in Montreal, inspired by movement and faith.</p>
 
-      <!-- Gallery (left) -->
-      <div class="product-gallery">
-        <div class="gallery-stage" aria-live="polite">
-          <button class="gallery-nav prev" aria-label="Previous image">❮</button>
-          <img src="images/hoodie.png" alt="LayaliFlow Hoodie — front view" class="stage-img is-active">
-          <img src="images/hoodie.png" alt="LayaliFlow Hoodie — side view" class="stage-img">
-          <img src="images/hoodie.png" alt="LayaliFlow Hoodie — detail view" class="stage-img">
-          <button class="gallery-nav next" aria-label="Next image">❯</button>
-        </div>
-
-        <div class="gallery-thumbs" role="group" aria-label="Gallery thumbnails">
-          <button class="thumb is-active" aria-label="Front image">
-            <img src="images/hoodie.png" alt="">
-          </button>
-          <button class="thumb" aria-label="Side image">
-            <img src="images/hoodie.png" alt="">
-          </button>
-          <button class="thumb" aria-label="Detail image">
-            <img src="images/hoodie.png" alt="">
-          </button>
-        </div>
+    <div class="two-col" style="align-items:start">
+      <div>
+        <p>
+          LayaliFlow blends modest activewear with elegant lines and functional comfort.
+          We design pieces that move with you—breathable, opaque, and thoughtfully
+          cut—so you feel composed in every rep.
+        </p>
+        <ul>
+          <li>Breathable, quick‑dry fabrics</li>
+          <li>Opaque, squat‑proof leggings & skirt‑pants</li>
+          <li>Timeless palettes with soft gold accents</li>
+        </ul>
+        <p>
+          Our approach is simple: refine the silhouette, elevate the fabric, and
+          keep details intentional—from seam placement to pocket depth—so coverage
+          feels effortless, not restrictive.
+        </p>
       </div>
-
-      <!-- Info (right) -->
-      <div class="product-info">
-        <h1>Turtleneck Hoodie</h1>
-        <p class="price" id="priceEl" data-price="85.00">$85.00 CAD</p>
-
-        <!-- Colors -->
-        <div class="product-option">
-          <div class="label-row">
-            <span class="label">Color:</span>
-            <span class="value" id="colorValue">Black</span>
-          </div>
-          <div class="swatches" id="colorSwatches">
-            <label class="swatch">
-              <input checked id="color-black" name="color" type="radio" value="Black">
-              <label for="color-black" title="Black" style="--swatch:#121417"></label>
-            </label>
-            <label class="swatch">
-              <input id="color-oat" name="color" type="radio" value="Oat">
-              <label for="color-oat" title="Oat" style="--swatch:#e9e5dd"></label>
-            </label>
-            <label class="swatch">
-              <input id="color-greige" name="color" type="radio" value="Greige">
-              <label for="color-greige" title="Greige" style="--swatch:#a79f95"></label>
-            </label>
-            <label class="swatch">
-              <input id="color-terracotta" name="color" type="radio" value="Terracotta">
-              <label for="color-terracotta" title="Terracotta" style="--swatch:#8b4a36"></label>
-            </label>
-            <label class="swatch">
-              <input id="color-navy" name="color" type="radio" value="Navy">
-              <label for="color-navy" title="Navy" style="--swatch:#1b2540"></label>
-            </label>
-          </div>
-        </div>
-
-        <!-- Sizes -->
-        <div class="product-option">
-          <span class="label">Size:</span>
-          <div class="sizes" id="sizeOptions">
-            <label class="size"><input type="radio" name="size" value="XS"><span>XS</span></label>
-            <label class="size"><input type="radio" name="size" value="S"><span>S</span></label>
-            <label class="size"><input type="radio" name="size" value="M"><span>M</span></label>
-            <label class="size"><input type="radio" name="size" value="L"><span>L</span></label>
-            <label class="size"><input type="radio" name="size" value="XL"><span>XL</span></label>
-            <label class="size"><input type="radio" name="size" value="2XL"><span>2XL</span></label>
-            <label class="size"><input type="radio" name="size" value="3XL"><span>3XL</span></label>
-          </div>
-        </div>
-
-        <div class="fit-links">
-          <a href="#" class="muted-link">Size Chart</a>
-        </div>
-
-        <button class="btn-primary add-to-cart">Add to Cart</button>
-
-        <p class="description">
-          A loose, breathable hoodie perfect for modest sportswear—mid‑thigh length, wide hood, and cozy coverage.
+      <div class="card" style="padding:16px">
+        <h3 style="margin-top:0">What modest means to us</h3>
+        <p class="sub">Comfortable, confident, and practical for real training.</p>
+        <p>
+          Modesty is personal. We aim to offer options—longer lengths, looser drape,
+          and layering pieces—so you can choose the coverage that fits your routine.
         </p>
       </div>
     </div>
-  </section>
 
-  <!-- DRAWERS (same as index.html) -->
+    <h2 style="margin-top:32px">Materials & care</h2>
+    <p>
+      We’re prototyping technical blends that are soft against the skin, resilient
+      to sweat and repeated wash, and maintain drape without cling. Care guides will
+      be published before launch to help your pieces last.
+    </p>
+  </main>
+
+  <!-- DRAWERS -->
   <div class="drawer-backdrop" id="drawerBackdrop" hidden></div>
 
   <aside class="drawer" id="menuDrawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle" hidden>
@@ -199,6 +150,7 @@
     </nav>
   </aside>
 
+  <!-- CART drawer (matches index trimmed version) -->
   <aside class="drawer" id="cartDrawer" role="dialog" aria-modal="true" aria-labelledby="cartDrawerTitle" hidden>
     <header class="drawer-header">
       <h2 id="cartDrawerTitle">Your cart</h2>
@@ -209,8 +161,8 @@
       <!-- Empty state -->
       <div class="cart-empty" id="cartEmpty" hidden>
         <div class="bag-illus" aria-hidden="true">
-          <img src="images/shopping-bag.png" alt="" />
-        </div>
+					<img src="images/shopping-bag.png" alt="" />
+				</div>
         <h3>Your cart is empty</h3>
         <p class="sub">There are no products in your cart</p>
         <a class="btn-primary cart-cta" href="lookbook.html">Shop all products</a>
@@ -228,6 +180,7 @@
           </div>
           <p class="muted">Taxes and shipping calculated at checkout.</p>
 
+          <!-- Only checkout here -->
           <div class="cart-cta">
             <button id="checkoutBtn" class="btn-primary" disabled>Checkout</button>
           </div>
@@ -256,7 +209,7 @@
     (function () {
       const backdrop = document.getElementById('drawerBackdrop');
 
-      // ===== Drawers (include "cart") =====
+      // Drawers (include cart)
       const drawers = {
         menu: { button: document.getElementById('menuBtn'), panel: document.getElementById('menuDrawer') },
         shop: { button: document.getElementById('shopBtn'), panel: document.getElementById('shopDrawer') },
@@ -269,12 +222,10 @@
         Object.values(drawers).forEach(({ panel }) => panel?.removeAttribute('open'));
         slot.panel.hidden = false;
         backdrop.hidden = false;
-        requestAnimationFrame(() => slot.panel.setAttribute('open', ''));
-        slot.button?.setAttribute('aria-expanded', 'true');
-
+        requestAnimationFrame(() => slot.panel.setAttribute('open',''));
+        slot.button?.setAttribute('aria-expanded','true');
         const firstLink = slot.panel.querySelector('a, button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
         setTimeout(() => (firstLink ? firstLink.focus() : slot.panel.querySelector('[data-drawer-close]')?.focus()), 10);
-
         if (key === 'cart') renderCart();
       }
 
@@ -282,7 +233,7 @@
         Object.values(drawers).forEach(({ button, panel }) => {
           if (!panel) return;
           panel.removeAttribute('open');
-          button?.setAttribute('aria-expanded', 'false');
+          button?.setAttribute('aria-expanded','false');
           setTimeout(() => { panel.hidden = true; }, 200);
         });
         backdrop.hidden = true;
@@ -297,7 +248,7 @@
       document.querySelectorAll('[data-drawer-close]').forEach(btn => btn.addEventListener('click', closeAll));
       document.querySelectorAll('.drawer a').forEach(a => a.addEventListener('click', closeAll));
 
-      // ===== Mini‑cart logic (same as index.html) =====
+      // Mini‑cart logic (same as index)
       const CART_KEY = 'lf_cart';
       const badge = document.getElementById('cartBadge');
       const listEl = document.getElementById('cartList');
@@ -318,9 +269,7 @@
         const count = items.reduce((n, it) => n + (it.qty || 0), 0);
         if (badge) badge.textContent = count;
       }
-      function money(n) {
-        return new Intl.NumberFormat(undefined, { style: 'currency', currency: 'CAD' }).format(n || 0);
-      }
+      function money(n){ return new Intl.NumberFormat(undefined,{style:'currency',currency:'CAD'}).format(n||0); }
 
       function renderCart() {
         const items = getCart();
@@ -329,10 +278,7 @@
         if (emptyEl) emptyEl.hidden = hasItems;
         if (hasEl) hasEl.hidden = !hasItems;
 
-        if (!hasItems) {
-          if (checkoutBtn) checkoutBtn.disabled = true;
-          return;
-        }
+        if (!hasItems) { if (checkoutBtn) checkoutBtn.disabled = true; return; }
 
         if (listEl) listEl.innerHTML = '';
         let subtotal = 0;
@@ -356,7 +302,7 @@
                 <button class="remove-btn" data-act="remove" data-i="${idx}">Remove</button>
               </div>
             </div>
-            <div style="align-self:center; font-weight:600;">${money(price * qty)}</div>
+            <div style="align-self:center;font-weight:600;">${money(price * qty)}</div>
           `;
           listEl?.appendChild(li);
         });
@@ -382,64 +328,19 @@
         }, { once: true });
       }
 
-      // Add‑to‑cart for this product
-      document.querySelector('.add-to-cart')?.addEventListener('click', () => {
-        const price = Number(document.getElementById('priceEl')?.dataset.price || 0);
-        const color = document.querySelector('input[name="color"]:checked')?.value || 'Black';
-        const size = document.querySelector('input[name="size"]:checked')?.value || 'M';
-        const img = document.querySelector('.stage-img.is-active')?.getAttribute('src') || 'images/hoodie.png';
-
-        const item = {
-          id: 'hoodie', title: 'Turtleneck Hoodie',
-          price, img, color, size, qty: 1
-        };
-
-        // Reuse the same storage API as index
+      // global helper
+      window.addToCart = function(item){
         const cur = getCart();
-        const key = (v) => [v.id, v.color, v.size].join('|');
+        const key = v => [v.id, v.color, v.size].join('|');
         const k = key(item);
         const found = cur.find(x => key(x) === k);
-        if (found) found.qty = (found.qty || 1) + 1;
-        else cur.push(item);
+        if (found) found.qty = (found.qty || 1) + (item.qty || 1);
+        else cur.push({ ...item, qty: item.qty || 1 });
         setCart(cur);
-
         openDrawer('cart');
-      });
+      };
 
-      // Update color label live
-      document.getElementById('colorSwatches')?.addEventListener('change', (e) => {
-        if (e.target.name === 'color') {
-          document.getElementById('colorValue').textContent = e.target.value;
-        }
-      });
-
-      // Initialize badge on load
       updateBadge();
-    })();
-
-    // Lightweight gallery (unchanged)
-    (function () {
-      const stageImgs = Array.from(document.querySelectorAll('.stage-img'));
-      const thumbs = Array.from(document.querySelectorAll('.thumb'));
-      const prevBtn = document.querySelector('.gallery-nav.prev');
-      const nextBtn = document.querySelector('.gallery-nav.next');
-
-      let currentIndex = 0;
-
-      function updateGallery(index) {
-        stageImgs.forEach((img, i) => img.classList.toggle('is-active', i === index));
-        thumbs.forEach((th, i) => th.classList.toggle('is-active', i === index));
-        currentIndex = index;
-
-        prevBtn.style.display = currentIndex === 0 ? 'none' : 'block';
-        nextBtn.style.display = currentIndex === stageImgs.length - 1 ? 'none' : 'block';
-      }
-
-      prevBtn.addEventListener('click', () => { if (currentIndex > 0) updateGallery(currentIndex - 1); });
-      nextBtn.addEventListener('click', () => { if (currentIndex < stageImgs.length - 1) updateGallery(currentIndex + 1); });
-      thumbs.forEach((thumb, i) => thumb.addEventListener('click', () => updateGallery(i)));
-
-      updateGallery(0);
     })();
   </script>
 </body>
