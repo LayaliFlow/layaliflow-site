@@ -31,20 +31,18 @@
         </form>
 
         <button class="icon-btn" id="shopBtn" aria-label="Shop" aria-haspopup="dialog" aria-controls="shopDrawer" aria-expanded="false">
-          <!-- Bag -->
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M6 2l1.5 4h9L18 2H6zM3 6h18v14H3V6z"/>
           </svg>
         </button>
 
         <button class="icon-btn" id="cartBtn" aria-label="Cart" aria-haspopup="dialog" aria-controls="cartDrawer" aria-expanded="false">
-          <!-- Cart icon -->
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="9" cy="21" r="1"/>
             <circle cx="20" cy="21" r="1"/>
             <path d="M1 1h4l3.6 7.59L5.25 14H19a1 1 0 0 0 .96-.74L23 4H6"/>
           </svg>
-          <span class="cart-badge">0</span>
+          <span class="cart-badge" id="cartBadge">0</span>
         </button>
 
         <button class="icon-btn" id="menuBtn" aria-label="Menu" aria-haspopup="dialog" aria-controls="menuDrawer" aria-expanded="false">
@@ -78,7 +76,7 @@
     </div>
   </main>
 
-  <!-- DRAWERS (same as other pages) -->
+  <!-- DRAWERS (unified across pages) -->
   <div class="drawer-backdrop" id="drawerBackdrop" hidden></div>
 
   <aside class="drawer" id="menuDrawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle" hidden>
@@ -132,16 +130,18 @@
 
   <aside class="drawer" id="cartDrawer" role="dialog" aria-modal="true" aria-labelledby="cartDrawerTitle" hidden>
     <header class="drawer-header">
-      <h2 id="cartDrawerTitle">Your bag</h2>
+      <h2 id="cartDrawerTitle">Your cart</h2>
       <button class="drawer-close" data-drawer-close aria-label="Close cart">&times;</button>
     </header>
 
     <div class="cart-body">
       <!-- Empty state -->
       <div class="cart-empty" id="cartEmpty" hidden>
-        <div class="bag-illus" aria-hidden="true">🛍️</div>
-        <h3>Your bag is empty</h3>
-        <p class="sub">There are no products in your bag</p>
+        <div class="bag-illus" aria-hidden="true">
+          <img src="images/shopping-bag.png" alt="" />
+        </div>
+        <h3>Your cart is empty</h3>
+        <p class="sub">There are no products in your cart</p>
         <a class="btn-primary cart-cta" href="lookbook.html">Shop all products</a>
         <a class="muted-link cart-login" href="signin.html">Sign in to your account</a>
       </div>
@@ -151,16 +151,15 @@
         <ul class="cart-list" id="cartList" aria-label="Cart items"></ul>
 
         <div class="cart-summary">
-          <div class="row">
+          <div class="cart-subline">
             <span>Subtotal</span>
             <strong id="cartSubtotal">$0.00</strong>
           </div>
-          <p class="tiny sub">Taxes and shipping calculated at checkout.</p>
-          <div class="actions">
-            <a class="btn-ghost" href="lookbook.html">Shop all products</a>
-            <button class="btn-primary" id="checkoutBtn" disabled>Checkout</button>
+          <p class="muted">Taxes and shipping calculated at checkout.</p>
+
+          <div class="cart-cta">
+            <button id="checkoutBtn" class="btn-primary" disabled>Checkout</button>
           </div>
-          <a class="muted-link cart-login" href="signin.html">Sign in to your account</a>
         </div>
       </div>
     </div>
@@ -178,9 +177,10 @@
   </footer>
 
   <script>
+    // Year
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // ---- Catalog (same filenames you already use) ----
+    // ---------- Catalog (unchanged logic) ----------
     const catalog = [
       { title:'Turtleneck Hoodie', tag:'Hoodie', cat:'tops',
         desc:'Mid‑thigh length with wide hood. Breathable, cozy coverage.',
@@ -194,10 +194,8 @@
       { title:'A‑Line Training Skirt‑Pants', tag:'Skirt‑Pants', cat:'bottoms',
         desc:'Flowy outer skirt with straight under‑leggings. Breathable, squat‑proof.',
         url:'skirt-pants.html', img:'images/skirt-pants.png' },
-      // accessories later…
     ];
 
-    // ---- Render helper ----
     const grid = document.getElementById('catalog-grid');
     const empty = document.getElementById('empty');
 
@@ -221,61 +219,169 @@
         grid.appendChild(a);
       });
 
-      // pills active state
       document.querySelectorAll('#filters .pill').forEach(b => {
-        b.style.background = (b.dataset.cat===cat || (cat==='all'&&b.dataset.cat==='all')) ? '#f0ebe2' : '';
-        b.style.borderColor = (b.dataset.cat===cat || (cat==='all'&&b.dataset.cat==='all')) ? 'var(--accent-2)' : '';
+        const active = (b.dataset.cat===cat) || (cat==='all' && b.dataset.cat==='all');
+        b.style.background = active ? '#f0ebe2' : '';
+        b.style.borderColor = active ? 'var(--accent-2)' : '';
       });
     }
 
-    // ---- Read initial category from URL (?category=tops etc.) ----
     const params = new URLSearchParams(location.search);
     let currentCat = (params.get('category') || 'all').toLowerCase();
     if (!['all','tops','bottoms','accessories'].includes(currentCat)) currentCat='all';
     render(currentCat);
 
-    // ---- Filter clicks ----
     document.querySelectorAll('#filters .pill').forEach(btn => {
       btn.addEventListener('click', () => {
         currentCat = btn.dataset.cat;
         render(currentCat);
-        // Update URL (no page reload)
         const u = new URL(location.href);
-        if (currentCat==='all') { u.searchParams.delete('category'); }
-        else { u.searchParams.set('category', currentCat); }
+        if (currentCat==='all') u.searchParams.delete('category');
+        else u.searchParams.set('category', currentCat);
         history.replaceState(null, '', u.toString());
       });
     });
 
-    // ---- Drawers (same behavior as other pages) ----
+    // ---------- Drawers + Shared Mini‑Cart (same as product pages) ----------
     (function () {
       const backdrop = document.getElementById('drawerBackdrop');
       const drawers = {
-        menu: { button: document.getElementById('menuBtn'), panel: document.getElementById('menuDrawer') },
-        shop: { button: document.getElementById('shopBtn'), panel: document.getElementById('shopDrawer') }
+        menu: { button: document.getElementById('menuBtn'),  panel: document.getElementById('menuDrawer') },
+        shop: { button: document.getElementById('shopBtn'),  panel: document.getElementById('shopDrawer') },
+        cart: { button: document.getElementById('cartBtn'),  panel: document.getElementById('cartDrawer') }
       };
+
       function openDrawer(key) {
-        const { button, panel } = drawers[key];
-        Object.values(drawers).forEach(({panel:p}) => p.removeAttribute('open'));
-        panel.hidden = false; backdrop.hidden = false;
-        requestAnimationFrame(() => panel.setAttribute('open',''));
-        button.setAttribute('aria-expanded','true');
-        const first = panel.querySelector('a,button,[href],input,select,textarea,[tabindex]:not([tabindex="-1"])');
-        setTimeout(() => (first ? first.focus() : panel.querySelector('[data-drawer-close]')?.focus()), 10);
+        const slot = drawers[key];
+        if (!slot?.panel) return;
+
+        Object.values(drawers).forEach(({ panel }) => panel?.removeAttribute('open'));
+        slot.panel.hidden = false;
+        backdrop.hidden = false;
+        requestAnimationFrame(() => slot.panel.setAttribute('open',''));
+        slot.button?.setAttribute('aria-expanded','true');
+
+        const first = slot.panel.querySelector('a, button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+        setTimeout(() => (first ? first.focus() : slot.panel.querySelector('[data-drawer-close]')?.focus()), 10);
+
+        if (key === 'cart') renderCart();
+        document.body.classList.add('drawer-open');
       }
+
       function closeAll() {
-        Object.values(drawers).forEach(({button, panel}) => {
-          panel.removeAttribute('open'); button.setAttribute('aria-expanded','false');
+        Object.values(drawers).forEach(({ button, panel }) => {
+          if (!panel) return;
+          panel.removeAttribute('open');
+          button?.setAttribute('aria-expanded','false');
           setTimeout(() => { panel.hidden = true; }, 200);
         });
         backdrop.hidden = true;
+        document.body.classList.remove('drawer-open');
       }
-      drawers.menu.button.addEventListener('click', () => openDrawer('menu'));
-      drawers.shop.button.addEventListener('click', () => openDrawer('shop'));
-      backdrop.addEventListener('click', closeAll);
-      document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAll(); });
+
+      drawers.menu.button?.addEventListener('click', () => openDrawer('menu'));
+      drawers.shop.button?.addEventListener('click', () => openDrawer('shop'));
+      drawers.cart.button?.addEventListener('click', () => openDrawer('cart'));
+      backdrop?.addEventListener('click', closeAll);
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAll(); });
       document.querySelectorAll('[data-drawer-close]').forEach(btn => btn.addEventListener('click', closeAll));
       document.querySelectorAll('.drawer a').forEach(a => a.addEventListener('click', closeAll));
+
+      // ---- Mini‑cart (shared) ----
+      const CART_KEY   = 'lf_cart';
+      const badge      = document.getElementById('cartBadge');
+      const listEl     = document.getElementById('cartList');
+      const emptyEl    = document.getElementById('cartEmpty');
+      const hasEl      = document.getElementById('cartHasItems');
+      const subtotalEl = document.getElementById('cartSubtotal');
+      const checkoutBtn= document.getElementById('checkoutBtn');
+
+      const getCart = () => {
+        try { return JSON.parse(localStorage.getItem(CART_KEY)) || []; }
+        catch { return []; }
+      };
+      const setCart = (items) => {
+        localStorage.setItem(CART_KEY, JSON.stringify(items));
+        updateBadge(items);
+      };
+      const updateBadge = (items = getCart()) => {
+        const count = items.reduce((n, it) => n + (it.qty || 0), 0);
+        if (badge) badge.textContent = count;
+      };
+      const money = (n) =>
+        new Intl.NumberFormat(undefined, { style: 'currency', currency: 'CAD' }).format(n || 0);
+
+      function renderCart() {
+        const items = getCart();
+        const hasItems = items.length > 0;
+
+        if (emptyEl && hasEl) {
+          if (hasItems) {
+            emptyEl.setAttribute('hidden', '');
+            hasEl.removeAttribute('hidden');
+          } else {
+            hasEl.setAttribute('hidden', '');
+            emptyEl.removeAttribute('hidden');
+            if (checkoutBtn) checkoutBtn.disabled = true;
+          }
+        }
+        if (!hasItems) return;
+
+        if (listEl) listEl.innerHTML = '';
+        let subtotal = 0;
+
+        items.forEach((it, idx) => {
+          const price = Number(it.price || 0);
+          const qty   = Number(it.qty || 1);
+          subtotal += price * qty;
+
+          const li = document.createElement('li');
+          li.className = 'cart-item';
+          li.innerHTML = `
+            <div class="cart-thumb">${it.img ? `<img src="${it.img}" alt="">` : ''}</div>
+            <div class="cart-info">
+              <div class="title">${it.title || 'Item'}</div>
+              <div class="meta">${[it.color, it.size].filter(Boolean).join(' • ')}</div>
+              <div class="cart-qty">
+                <button class="qty-btn" data-act="dec" data-i="${idx}" aria-label="Decrease quantity">−</button>
+                <span aria-live="polite">${qty}</span>
+                <button class="qty-btn" data-act="inc" data-i="${idx}" aria-label="Increase quantity">+</button>
+                <button class="remove-btn" data-act="remove" data-i="${idx}">Remove</button>
+              </div>
+            </div>
+            <div style="align-self:center; font-weight:600;">${money(price * qty)}</div>
+          `;
+          listEl?.appendChild(li);
+        });
+
+        if (subtotalEl)  subtotalEl.textContent = money(subtotal);
+        if (checkoutBtn) checkoutBtn.disabled  = subtotal <= 0;
+      }
+
+      // One delegated click handler
+      if (listEl) {
+        listEl.onclick = (e) => {
+          const btn = e.target.closest('[data-act]');
+          if (!btn) return;
+
+          const i   = Number(btn.getAttribute('data-i'));
+          const act = btn.getAttribute('data-act');
+          const cur = getCart();
+          const item = cur[i];
+          if (!item) return;
+
+          if (act === 'inc') item.qty = (item.qty || 1) + 1;
+          if (act === 'dec') item.qty = Math.max(1, (item.qty || 1) - 1);
+          if (act === 'remove') cur.splice(i, 1);
+
+          setCart(cur);
+          renderCart();
+        };
+      }
+
+      // Initial sync
+      updateBadge();
+      renderCart();
     })();
   </script>
 </body>
