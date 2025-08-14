@@ -32,7 +32,7 @@
           <input id="site-search" name="q" type="search" placeholder="Search pieces…" aria-label="Search featured pieces">
         </form>
 
-        <!-- Icon buttons (match index.html) -->
+        <!-- Icon buttons -->
         <button class="icon-btn" id="shopBtn" aria-label="Shop" aria-haspopup="dialog" aria-controls="shopDrawer" aria-expanded="false">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M6 2l1.5 4h9L18 2H6zM3 6h18v14H3V6z"/>
@@ -61,7 +61,7 @@
   <section class="product-page">
     <div class="container product-main two-col">
 
-      <!-- Gallery (left) -->
+      <!-- Gallery (left side) -->
       <div class="product-gallery">
         <div class="gallery-stage" aria-live="polite">
           <button class="gallery-nav prev" aria-label="Previous image">❮</button>
@@ -84,12 +84,12 @@
         </div>
       </div>
 
-      <!-- Info (right) -->
+      <!-- Info (right side) -->
       <div class="product-info">
         <h1>Turtleneck Hoodie</h1>
         <p class="price" id="priceEl" data-price="85.00">$85.00 CAD</p>
 
-        <!-- Colors -->
+        <!-- Colours -->
         <div class="product-option">
           <div class="label-row">
             <span class="label">Color:</span>
@@ -128,8 +128,6 @@
             <label class="size"><input type="radio" name="size" value="M" checked><span>M</span></label>
             <label class="size"><input type="radio" name="size" value="L"><span>L</span></label>
             <label class="size"><input type="radio" name="size" value="XL"><span>XL</span></label>
-            <label class="size"><input type="radio" name="size" value="2XL"><span>2XL</span></label>
-            <label class="size"><input type="radio" name="size" value="3XL"><span>3XL</span></label>
           </div>
         </div>
 
@@ -167,7 +165,7 @@
     </div>
   </section>
 
-  <!-- DRAWERS (same as index.html) -->
+  <!-- DRAWERS -->
   <div class="drawer-backdrop" id="drawerBackdrop" hidden></div>
 
   <aside class="drawer" id="menuDrawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle" hidden>
@@ -248,6 +246,7 @@
           </div>
           <p class="muted">Taxes and shipping calculated at checkout.</p>
 
+          <!-- Only checkout here -->
           <div class="cart-cta">
             <button id="checkoutBtn" class="btn-primary" disabled>Checkout</button>
           </div>
@@ -288,19 +287,21 @@
       const slot = drawers[key];
       if (!slot?.panel) return;
 
-      // close others, reveal this
+      // Close any open drawer first
       Object.values(drawers).forEach(({ panel }) => panel?.removeAttribute('open'));
+
+      // Reveal + animate current
       slot.panel.hidden = false;
       backdrop.hidden = false;
       requestAnimationFrame(() => slot.panel.setAttribute('open',''));
       slot.button?.setAttribute('aria-expanded','true');
 
-      // focus
+      // Focus first focusable
       const first = slot.panel.querySelector('a, button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
       setTimeout(() => (first ? first.focus() : slot.panel.querySelector('[data-drawer-close]')?.focus()), 10);
 
-      if (key === 'cart') renderCart();      // refresh cart on open
-      document.body.classList.add('drawer-open'); // lock scroll
+      if (key === 'cart') renderCart(); // refresh cart when opening
+      document.body.classList.add('drawer-open'); // lock page scroll
     }
 
     function closeAll() {
@@ -352,7 +353,7 @@
       const items = getCart();
       const hasItems = items.length > 0;
 
-      // toggle sections
+      // Toggle empty vs has‑items sections (mutually exclusive)
       if (emptyEl && hasEl) {
         if (hasItems) {
           emptyEl.setAttribute('hidden', '');
@@ -365,7 +366,7 @@
       }
       if (!hasItems) return;
 
-      // build list
+      // Build list
       if (listEl) listEl.innerHTML = '';
       let subtotal = 0;
 
@@ -397,7 +398,7 @@
       if (checkoutBtn) checkoutBtn.disabled  = subtotal <= 0;
     }
 
-    // one delegated click handler (no re-binding)
+    // Single delegated handler
     if (listEl) {
       listEl.onclick = (e) => {
         const btn = e.target.closest('[data-act]');
@@ -418,7 +419,7 @@
       };
     }
 
-    // shared helper
+    // Shred helper so product pages can add items
     // window.addToCart({id, title, price, img, color, size, qty:1})
     window.addToCart = (item) => {
       const cur = getCart();
@@ -479,7 +480,7 @@
       }
     });
 
-    // initial sync
+    // Initial sync on page load
     updateBadge();
     renderCart();
   })();

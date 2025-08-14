@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LayaliFlow — Sign in</title>
+  <meta name="description" content="Sign in to your LayaliFlow account." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="LayaliFlow — Sign in" />
+  <meta property="og:description" content="Access your LayaliFlow account to view orders and preferences." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://layaliflow.github.io/layaliflow-site/signin.html" />
+  <meta property="og:image" content="https://layaliflow.github.io/layaliflow-site/images/crescent_logo.png" />
+
+  <link rel="icon" type="image/png" href="images/crescent_logo.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- NAV -->
+  <nav class="nav" role="navigation" aria-label="Primary">
+    <div class="container inner">
+      <a class="brand" href="index.html#home" aria-label="LayaliFlow Home">
+        <div class="logo"><img src="images/crescent_logo.png" alt="LayaliFlow Logo"></div>
+        <span>LayaliFlow</span>
+      </a>
+
+      <div class="nav-actions" role="group" aria-label="Primary actions">
+        <form class="search" role="search" aria-label="Site search" action="search.html" method="get">
+          <input id="site-search" name="q" type="search" placeholder="Search pieces…" aria-label="Search featured pieces">
+        </form>
+
+        <button class="icon-btn" id="shopBtn" aria-label="Shop" aria-haspopup="dialog" aria-controls="shopDrawer" aria-expanded="false">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2l1.5 4h9L18 2H6zM3 6h18v14H3V6z"/>
+          </svg>
+        </button>
+
+        <button class="icon-btn" id="cartBtn" aria-label="Cart" aria-haspopup="dialog" aria-controls="cartDrawer" aria-expanded="false">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="9" cy="21" r="1"/>
+            <circle cx="20" cy="21" r="1"/>
+            <path d="M1 1h4l3.6 7.59L5.25 14H19a1 1 0 0 0 .96-.74L23 4H6"/>
+          </svg>
+          <span class="cart-badge" id="cartBadge">0</span>
+        </button>
+
+        <button class="icon-btn" id="menuBtn" aria-label="Menu" aria-haspopup="dialog" aria-controls="menuDrawer" aria-expanded="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3 6h18M3 12h18M3 18h18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="section">
+    <div class="container" style="max-width:560px">
+      <h1 style="margin-bottom:8px">Sign in</h1>
+      <p class="sub" style="margin-bottom:24px">Welcome back. Sign in to manage your preferences and checkout faster.</p>
+
+      <form id="signinForm" novalidate class="card" style="padding:20px">
+        <div class="form-field" style="margin-bottom:14px">
+          <label for="email" class="label">Email</label>
+          <input id="email" name="email" type="email" autocomplete="email" required
+                 placeholder="you@example.com"
+                 style="width:100%;height:44px;border:1px solid #e6dfd3;border-radius:10px;padding:0 12px;background:#fff">
+          <small class="error" id="emailErr" style="display:none;color:#a23">Please enter a valid email.</small>
+        </div>
+
+        <div class="form-field" style="margin-bottom:12px">
+          <label for="password" class="label">Password</label>
+          <div style="position:relative">
+            <input id="password" name="password" type="password" minlength="6" required
+                   autocomplete="current-password"
+                   style="width:100%;height:44px;border:1px solid #e6dfd3;border-radius:10px;padding:0 44px 0 12px;background:#fff">
+            <!-- password toggle with your icons -->
+            <button type="button" id="pwToggle" class="icon-btn"
+                    aria-label="Show password" aria-pressed="false"
+                    style="position:absolute;right:6px;top:6px;width:32px;height:32px;border:1px solid #e6dfd3;border-radius:8px;background:#f8f6f2;display:flex;align-items:center;justify-content:center">
+              <img id="pwIcon" src="images/lock.png" alt="" style="width:18px;height:18px">
+            </button>
+          </div>
+          <small class="error" id="pwErr" style="display:none;color:#a23">Password must be at least 6 characters.</small>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;align-items:center;margin:8px 0 18px">
+          <label style="display:flex;align-items:center;gap:8px">
+            <input type="checkbox" id="remember" name="remember"> <span>Remember me</span>
+          </label>
+          <a class="muted-link" href="#" id="forgotLink">Forgot password?</a>
+        </div>
+
+        <button class="btn-primary" type="submit" style="width:100%;height:46px">Sign in</button>
+
+        <p class="sub" style="margin-top:14px;text-align:center">
+          Don’t have an account?
+          <a href="account.html" style="color:#c7a36e">Create one</a>
+        </p>
+
+        <!-- ARIA live region for messages -->
+        <div aria-live="polite" class="sub" id="formMsg" style="margin-top:10px"></div>
+      </form>
+    </div>
+  </main>
+
+  <!-- DRAWERS -->
+  <div class="drawer-backdrop" id="drawerBackdrop" hidden></div>
+
+  <aside class="drawer" id="menuDrawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle" hidden>
+    <header class="drawer-header">
+      <h2 id="drawerTitle">Menu</h2>
+      <button class="drawer-close" data-drawer-close aria-label="Close menu">&times;</button>
+    </header>
+    <nav class="drawer-nav" aria-label="Secondary">
+      <a href="about.html">About</a>
+      <a href="index.html#faq">FAQ</a>
+      <a href="privacy.html">Privacy</a>
+      <hr>
+      <a href="account.html">Account details</a>
+      <a href="signin.html">Sign in</a>
+      <a href="settings.html">Settings</a>
+    </nav>
+  </aside>
+
+  <aside class="drawer" id="shopDrawer" role="dialog" aria-modal="true" aria-labelledby="shopDrawerTitle" hidden>
+    <header class="drawer-header">
+      <h2 id="shopDrawerTitle">Shop</h2>
+      <button class="drawer-close" data-drawer-close aria-label="Close shop">&times;</button>
+    </header>
+    <nav class="drawer-nav" aria-label="Shop categories">
+      <details>
+        <summary>Tops</summary>
+        <div class="drawer-links">
+          <a href="hoodie.html">Turtleneck Hoodie</a>
+          <a href="long-sleeve-top.html">Long‑sleeve Top</a>
+        </div>
+      </details>
+      <details>
+        <summary>Bottoms</summary>
+        <div class="drawer-links">
+          <a href="skirt-pants.html">A‑Line Skirt‑Pants</a>
+          <a href="oversized-joggers.html">Oversized Joggers</a>
+        </div>
+      </details>
+      <details>
+        <summary>Accessories</summary>
+        <div class="drawer-links">
+          <a href="#">Coming soon</a>
+        </div>
+      </details>
+      <hr>
+      <a href="lookbook.html">All products</a>
+      <a href="search.html?q=new">New arrivals</a>
+      <a href="search.html?q=sale">Sale</a>
+    </nav>
+  </aside>
+
+  <aside class="drawer" id="cartDrawer" role="dialog" aria-modal="true" aria-labelledby="cartDrawerTitle" hidden>
+    <header class="drawer-header">
+      <h2 id="cartDrawerTitle">Your cart</h2>
+      <button class="drawer-close" data-drawer-close aria-label="Close cart">&times;</button>
+    </header>
+
+    <div class="cart-body">
+      <!-- Empty state -->
+      <div class="cart-empty" id="cartEmpty" hidden>
+        <div class="bag-illus" aria-hidden="true">
+          <img src="images/shopping-bag.png" alt="" />
+        </div>
+        <h3>Your cart is empty</h3>
+        <p class="sub">There are no products in your cart</p>
+        <a class="btn-primary cart-cta" href="lookbook.html">Shop all products</a>
+        <a class="muted-link cart-login" href="signin.html">Sign in to your account</a>
+      </div>
+
+      <!-- Populated state -->
+      <div class="cart-has-items" id="cartHasItems" hidden>
+        <ul class="cart-list" id="cartList" aria-label="Cart items"></ul>
+
+        <div class="cart-summary">
+          <div class="row">
+            <span>Subtotal</span>
+            <strong id="cartSubtotal">$0.00</strong>
+          </div>
+          <p class="tiny sub">Taxes and shipping calculated at checkout.</p>
+          <div class="actions">
+            <a class="btn-ghost" href="lookbook.html">Shop all products</a>
+            <button class="btn-primary" id="checkoutBtn" disabled>Checkout</button>
+          </div>
+          <a class="muted-link cart-login" href="signin.html">Sign in to your account</a>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container" style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap">
+      <small>© <span id="year"></span> LayaliFlow. All rights reserved.</small>
+      <div style="display:flex;gap:14px">
+        <a href="https://www.instagram.com/layali.flow/" target="_blank" rel="noreferrer" aria-label="Instagram">Instagram</a>
+        <a href="mailto:flow.layali@gmail.com?subject=Inquiry%20from%20LayaliFlow%20Website" rel="noreferrer" aria-label="Email">flow.layali@gmail.com</a>
+        <a href="privacy.html" aria-label="Privacy">Privacy</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (() => {
+      // Year
+      const y = document.getElementById('year');
+      if (y) y.textContent = new Date().getFullYear();
+
+      /* =========================
+        DRAWERS
+      ========================== */
+      const backdrop = document.getElementById('drawerBackdrop');
+      const drawers = {
+        menu: { button: document.getElementById('menuBtn'),  panel: document.getElementById('menuDrawer') },
+        shop: { button: document.getElementById('shopBtn'),  panel: document.getElementById('shopDrawer') },
+        cart: { button: document.getElementById('cartBtn'),  panel: document.getElementById('cartDrawer') }
+      };
+
+      function openDrawer(key) {
+        const slot = drawers[key];
+        if (!slot?.panel) return;
+
+        Object.values(drawers).forEach(({ panel }) => panel?.removeAttribute('open'));
+        slot.panel.hidden = false;
+        backdrop.hidden = false;
+        requestAnimationFrame(() => slot.panel.setAttribute('open',''));
+        slot.button?.setAttribute('aria-expanded','true');
+
+        const first = slot.panel.querySelector('a, button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+        setTimeout(() => (first ? first.focus() : slot.panel.querySelector('[data-drawer-close]')?.focus()), 10);
+
+        if (key === 'cart') renderCart();
+        document.body.classList.add('drawer-open');
+      }
+
+      function closeAll() {
+        Object.values(drawers).forEach(({ button, panel }) => {
+          if (!panel) return;
+          panel.removeAttribute('open');
+          button?.setAttribute('aria-expanded','false');
+          setTimeout(() => { panel.hidden = true; }, 200);
+        });
+        backdrop.hidden = true;
+        document.body.classList.remove('drawer-open');
+      }
+
+      drawers.menu.button?.addEventListener('click', () => openDrawer('menu'));
+      drawers.shop.button?.addEventListener('click', () => openDrawer('shop'));
+      drawers.cart.button?.addEventListener('click', () => openDrawer('cart'));
+      backdrop?.addEventListener('click', closeAll);
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAll(); });
+      document.querySelectorAll('[data-drawer-close]').forEach(btn => btn.addEventListener('click', closeAll));
+      document.querySelectorAll('.drawer a').forEach(a => a.addEventListener('click', closeAll));
+
+      /* =========================
+        MINI‑CART (shared)
+      ========================== */
+      const CART_KEY   = 'lf_cart';
+      const badge      = document.getElementById('cartBadge');
+      const listEl     = document.getElementById('cartList');
+      const emptyEl    = document.getElementById('cartEmpty');
+      const hasEl      = document.getElementById('cartHasItems');
+      const subtotalEl = document.getElementById('cartSubtotal');
+      const checkoutBtn= document.getElementById('checkoutBtn');
+
+      const getCart = () => {
+        try { return JSON.parse(localStorage.getItem(CART_KEY)) || []; }
+        catch { return []; }
+      };
+      const setCart = (items) => {
+        localStorage.setItem(CART_KEY, JSON.stringify(items));
+        updateBadge(items);
+      };
+      const updateBadge = (items = getCart()) => {
+        const count = items.reduce((n, it) => n + (it.qty || 0), 0);
+        if (badge) badge.textContent = count;
+      };
+      const money = (n) =>
+        new Intl.NumberFormat(undefined, { style: 'currency', currency: 'CAD' }).format(n || 0);
+
+      function renderCart() {
+        const items = getCart();
+        const hasItems = items.length > 0;
+
+        if (emptyEl && hasEl) {
+          if (hasItems) {
+            emptyEl.setAttribute('hidden', '');
+            hasEl.removeAttribute('hidden');
+          } else {
+            hasEl.setAttribute('hidden', '');
+            emptyEl.removeAttribute('hidden');
+            if (checkoutBtn) checkoutBtn.disabled = true;
+          }
+        }
+        if (!hasItems) return;
+
+        if (listEl) listEl.innerHTML = '';
+        let subtotal = 0;
+
+        items.forEach((it, idx) => {
+          const price = Number(it.price || 0);
+          const qty   = Number(it.qty || 1);
+          subtotal += price * qty;
+
+          const li = document.createElement('li');
+          li.className = 'cart-item';
+          li.innerHTML = `
+            <div class="cart-thumb">${it.img ? `<img src="${it.img}" alt="">` : ''}</div>
+            <div class="cart-info">
+              <div class="title">${it.title || 'Item'}</div>
+              <div class="meta">${[it.color, it.size].filter(Boolean).join(' • ')}</div>
+              <div class="cart-qty">
+                <button class="qty-btn" data-act="dec" data-i="${idx}" aria-label="Decrease quantity">−</button>
+                <span aria-live="polite">${qty}</span>
+                <button class="qty-btn" data-act="inc" data-i="${idx}" aria-label="Increase quantity">+</button>
+                <button class="remove-btn" data-act="remove" data-i="${idx}">Remove</button>
+              </div>
+            </div>
+            <div style="align-self:center; font-weight:600;">${money(price * qty)}</div>
+          `;
+          listEl?.appendChild(li);
+        });
+
+        if (subtotalEl)  subtotalEl.textContent = money(subtotal);
+        if (checkoutBtn) checkoutBtn.disabled  = subtotal <= 0;
+      }
+
+      if (listEl) {
+        listEl.onclick = (e) => {
+          const btn = e.target.closest('[data-act]');
+          if (!btn) return;
+
+          const i   = Number(btn.getAttribute('data-i'));
+          const act = btn.getAttribute('data-act');
+          const cur = getCart();
+          const item = cur[i];
+          if (!item) return;
+
+          if (act === 'inc') item.qty = (item.qty || 1) + 1;
+          if (act === 'dec') item.qty = Math.max(1, (item.qty || 1) - 1);
+          if (act === 'remove') cur.splice(i, 1);
+
+          setCart(cur);
+          renderCart();
+        };
+      }
+
+      // initial sync
+      updateBadge();
+      renderCart();
+    })();
+
+    /* =========================
+      SIGN IN: client-side demo
+    ========================== */
+    (() => {
+      const form = document.getElementById('signinForm');
+      const email = document.getElementById('email');
+      const password = document.getElementById('password');
+      const emailErr = document.getElementById('emailErr');
+      const pwErr = document.getElementById('pwErr');
+      const msg = document.getElementById('formMsg');
+
+      // Toggle password with lock/unlock icons
+      const pwToggle = document.getElementById('pwToggle');
+      const pwIcon = document.getElementById('pwIcon');
+
+      pwToggle?.addEventListener('click', () => {
+        const show = password.type === 'password';
+        password.type = show ? 'text' : 'password';
+        pwToggle.setAttribute('aria-label', show ? 'Hide password' : 'Show password');
+        pwToggle.setAttribute('aria-pressed', String(show));
+        // swap icon
+        pwIcon.src = show ? 'images/unlock.png' : 'images/lock.png';
+      });
+
+      function validEmail(v) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+      }
+
+      form?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        emailErr.style.display = 'none';
+        pwErr.style.display = 'none';
+        msg.textContent = '';
+
+        const okEmail = validEmail(email.value.trim());
+        const okPw = (password.value || '').length >= 6;
+
+        if (!okEmail) emailErr.style.display = 'block';
+        if (!okPw) pwErr.style.display = 'block';
+        if (!okEmail || !okPw) return;
+
+        // Demo "auth": store user + redirect
+        const user = { email: email.value.trim(), ts: Date.now() };
+        localStorage.setItem('lf_user', JSON.stringify(user));
+
+        msg.textContent = 'Signed in! Redirecting…';
+        setTimeout(() => {
+          const next = new URLSearchParams(location.search).get('next') || 'account.html';
+          location.href = next;
+        }, 500);
+      });
+
+      // Forgot password (demo)
+      document.getElementById('forgotLink')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        msg.textContent = 'Password reset is not enabled on the demo site. Please contact flow.layali@gmail.com.';
+      });
+    })();
+  </script>
+</body>
+</html>

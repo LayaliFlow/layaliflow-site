@@ -150,7 +150,7 @@
     </nav>
   </aside>
 
-  <!-- CART drawer (matches index trimmed version) -->
+  <!-- CART drawer -->
   <aside class="drawer" id="cartDrawer" role="dialog" aria-modal="true" aria-labelledby="cartDrawerTitle" hidden>
     <header class="drawer-header">
       <h2 id="cartDrawerTitle">Your cart</h2>
@@ -356,7 +356,7 @@
       };
     }
 
-    // Expose helper so product pages can add items
+    // Shred helper so product pages can add items
     // window.addToCart({id, title, price, img, color, size, qty:1})
     window.addToCart = (item) => {
       const cur = getCart();
