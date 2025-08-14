@@ -202,146 +202,180 @@
   </footer>
 
   <script>
+  (() => {
     // Year
     const y = document.getElementById('year');
     if (y) y.textContent = new Date().getFullYear();
 
-    (function () {
-      const backdrop = document.getElementById('drawerBackdrop');
+    /* =========================
+      DRAWERS (menu / shop / cart)
+    ========================== */
+    const backdrop = document.getElementById('drawerBackdrop');
+    const drawers = {
+      menu: { button: document.getElementById('menuBtn'),  panel: document.getElementById('menuDrawer') },
+      shop: { button: document.getElementById('shopBtn'),  panel: document.getElementById('shopDrawer') },
+      cart: { button: document.getElementById('cartBtn'),  panel: document.getElementById('cartDrawer') }
+    };
 
-      // Drawers (include cart)
-      const drawers = {
-        menu: { button: document.getElementById('menuBtn'), panel: document.getElementById('menuDrawer') },
-        shop: { button: document.getElementById('shopBtn'), panel: document.getElementById('shopDrawer') },
-        cart: { button: document.getElementById('cartBtn'), panel: document.getElementById('cartDrawer') }
-      };
+    function openDrawer(key) {
+      const slot = drawers[key];
+      if (!slot?.panel) return;
 
-      function openDrawer(key) {
-        const slot = drawers[key];
-        if (!slot?.panel) return;
-        Object.values(drawers).forEach(({ panel }) => panel?.removeAttribute('open'));
-        slot.panel.hidden = false;
-        backdrop.hidden = false;
-        requestAnimationFrame(() => slot.panel.setAttribute('open',''));
-        slot.button?.setAttribute('aria-expanded','true');
-        const firstLink = slot.panel.querySelector('a, button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
-        setTimeout(() => (firstLink ? firstLink.focus() : slot.panel.querySelector('[data-drawer-close]')?.focus()), 10);
-        if (key === 'cart') renderCart();
+      // Close any open drawer first
+      Object.values(drawers).forEach(({ panel }) => panel?.removeAttribute('open'));
+
+      // Reveal + animate current
+      slot.panel.hidden = false;
+      backdrop.hidden = false;
+      requestAnimationFrame(() => slot.panel.setAttribute('open',''));
+      slot.button?.setAttribute('aria-expanded','true');
+
+      // Focus first focusable
+      const first = slot.panel.querySelector('a, button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+      setTimeout(() => (first ? first.focus() : slot.panel.querySelector('[data-drawer-close]')?.focus()), 10);
+
+      if (key === 'cart') renderCart(); // refresh cart when opening
+      document.body.classList.add('drawer-open'); // lock page scroll
+    }
+
+    function closeAll() {
+      Object.values(drawers).forEach(({ button, panel }) => {
+        if (!panel) return;
+        panel.removeAttribute('open');
+        button?.setAttribute('aria-expanded','false');
+        setTimeout(() => { panel.hidden = true; }, 200);
+      });
+      backdrop.hidden = true;
+      document.body.classList.remove('drawer-open');
+    }
+
+    drawers.menu.button?.addEventListener('click', () => openDrawer('menu'));
+    drawers.shop.button?.addEventListener('click', () => openDrawer('shop'));
+    drawers.cart.button?.addEventListener('click', () => openDrawer('cart'));
+    backdrop?.addEventListener('click', closeAll);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAll(); });
+    document.querySelectorAll('[data-drawer-close]').forEach(btn => btn.addEventListener('click', closeAll));
+    document.querySelectorAll('.drawer a').forEach(a => a.addEventListener('click', closeAll));
+
+    /* =========================
+      MINI‑CART
+    ========================== */
+    const CART_KEY   = 'lf_cart';
+    const badge      = document.getElementById('cartBadge');
+    const listEl     = document.getElementById('cartList');
+    const emptyEl    = document.getElementById('cartEmpty');
+    const hasEl      = document.getElementById('cartHasItems');
+    const subtotalEl = document.getElementById('cartSubtotal');
+    const checkoutBtn= document.getElementById('checkoutBtn');
+
+    const getCart = () => {
+      try { return JSON.parse(localStorage.getItem(CART_KEY)) || []; }
+      catch { return []; }
+    };
+
+    const setCart = (items) => {
+      localStorage.setItem(CART_KEY, JSON.stringify(items));
+      updateBadge(items);
+    };
+
+    const updateBadge = (items = getCart()) => {
+      const count = items.reduce((n, it) => n + (it.qty || 0), 0);
+      if (badge) badge.textContent = count;
+    };
+
+    const money = (n) =>
+      new Intl.NumberFormat(undefined, { style: 'currency', currency: 'CAD' }).format(n || 0);
+
+    function renderCart() {
+      const items = getCart();
+      const hasItems = items.length > 0;
+
+      // Toggle empty vs has‑items sections (mutually exclusive)
+      if (emptyEl && hasEl) {
+        if (hasItems) {
+          emptyEl.setAttribute('hidden', '');
+          hasEl.removeAttribute('hidden');
+        } else {
+          hasEl.setAttribute('hidden', '');
+          emptyEl.removeAttribute('hidden');
+          if (checkoutBtn) checkoutBtn.disabled = true;
+        }
       }
+      if (!hasItems) return;
 
-      function closeAll() {
-        Object.values(drawers).forEach(({ button, panel }) => {
-          if (!panel) return;
-          panel.removeAttribute('open');
-          button?.setAttribute('aria-expanded','false');
-          setTimeout(() => { panel.hidden = true; }, 200);
-        });
-        backdrop.hidden = true;
-      }
+      // Build list
+      if (listEl) listEl.innerHTML = '';
+      let subtotal = 0;
 
-      drawers.menu.button?.addEventListener('click', () => openDrawer('menu'));
-      drawers.shop.button?.addEventListener('click', () => openDrawer('shop'));
-      drawers.cart.button?.addEventListener('click', () => openDrawer('cart'));
+      items.forEach((it, idx) => {
+        const price = Number(it.price || 0);
+        const qty   = Number(it.qty || 1);
+        subtotal += price * qty;
 
-      backdrop.addEventListener('click', closeAll);
-      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAll(); });
-      document.querySelectorAll('[data-drawer-close]').forEach(btn => btn.addEventListener('click', closeAll));
-      document.querySelectorAll('.drawer a').forEach(a => a.addEventListener('click', closeAll));
-
-      // Mini‑cart logic (same as index)
-      const CART_KEY = 'lf_cart';
-      const badge = document.getElementById('cartBadge');
-      const listEl = document.getElementById('cartList');
-      const emptyEl = document.getElementById('cartEmpty');
-      const hasEl = document.getElementById('cartHasItems');
-      const subtotalEl = document.getElementById('cartSubtotal');
-      const checkoutBtn = document.getElementById('checkoutBtn');
-
-      function getCart() {
-        try { return JSON.parse(localStorage.getItem(CART_KEY)) || []; }
-        catch { return []; }
-      }
-      function setCart(items) {
-        localStorage.setItem(CART_KEY, JSON.stringify(items));
-        updateBadge(items);
-      }
-      function updateBadge(items = getCart()) {
-        const count = items.reduce((n, it) => n + (it.qty || 0), 0);
-        if (badge) badge.textContent = count;
-      }
-      function money(n){ return new Intl.NumberFormat(undefined,{style:'currency',currency:'CAD'}).format(n||0); }
-
-      function renderCart() {
-        const items = getCart();
-        const hasItems = items.length > 0;
-
-        if (emptyEl) emptyEl.hidden = hasItems;
-        if (hasEl) hasEl.hidden = !hasItems;
-
-        if (!hasItems) { if (checkoutBtn) checkoutBtn.disabled = true; return; }
-
-        if (listEl) listEl.innerHTML = '';
-        let subtotal = 0;
-
-        items.forEach((it, idx) => {
-          const price = Number(it.price || 0);
-          const qty = Number(it.qty || 1);
-          subtotal += price * qty;
-
-          const li = document.createElement('li');
-          li.className = 'cart-item';
-          li.innerHTML = `
-            <div class="cart-thumb">${it.img ? `<img src="${it.img}" alt="">` : ''}</div>
-            <div class="cart-info">
-              <div class="title">${it.title || 'Item'}</div>
-              <div class="meta">${[it.color, it.size].filter(Boolean).join(' • ')}</div>
-              <div class="cart-qty">
-                <button class="qty-btn" data-act="dec" data-i="${idx}" aria-label="Decrease quantity">−</button>
-                <span aria-live="polite">${qty}</span>
-                <button class="qty-btn" data-act="inc" data-i="${idx}" aria-label="Increase quantity">+</button>
-                <button class="remove-btn" data-act="remove" data-i="${idx}">Remove</button>
-              </div>
+        const li = document.createElement('li');
+        li.className = 'cart-item';
+        li.innerHTML = `
+          <div class="cart-thumb">${it.img ? `<img src="${it.img}" alt="">` : ''}</div>
+          <div class="cart-info">
+            <div class="title">${it.title || 'Item'}</div>
+            <div class="meta">${[it.color, it.size].filter(Boolean).join(' • ')}</div>
+            <div class="cart-qty">
+              <button class="qty-btn" data-act="dec" data-i="${idx}" aria-label="Decrease quantity">−</button>
+              <span aria-live="polite">${qty}</span>
+              <button class="qty-btn" data-act="inc" data-i="${idx}" aria-label="Increase quantity">+</button>
+              <button class="remove-btn" data-act="remove" data-i="${idx}">Remove</button>
             </div>
-            <div style="align-self:center;font-weight:600;">${money(price * qty)}</div>
-          `;
-          listEl?.appendChild(li);
-        });
+          </div>
+          <div style="align-self:center; font-weight:600;">${money(price * qty)}</div>
+        `;
+        listEl?.appendChild(li);
+      });
 
-        if (subtotalEl) subtotalEl.textContent = money(subtotal);
-        if (checkoutBtn) checkoutBtn.disabled = subtotal <= 0;
+      if (subtotalEl)  subtotalEl.textContent = money(subtotal);
+      if (checkoutBtn) checkoutBtn.disabled  = subtotal <= 0;
+    }
 
-        listEl?.addEventListener('click', (e) => {
-          const btn = e.target.closest('[data-act]');
-          if (!btn) return;
-          const i = Number(btn.getAttribute('data-i'));
-          const act = btn.getAttribute('data-act');
-          const cur = getCart();
-          const item = cur[i];
-          if (!item) return;
+    // Single delegated handler
+    if (listEl) {
+      listEl.onclick = (e) => {
+        const btn = e.target.closest('[data-act]');
+        if (!btn) return;
 
-          if (act === 'inc') item.qty = (item.qty || 1) + 1;
-          if (act === 'dec') item.qty = Math.max(1, (item.qty || 1) - 1);
-          if (act === 'remove') cur.splice(i, 1);
-
-          setCart(cur);
-          renderCart();
-        }, { once: true });
-      }
-
-      // global helper
-      window.addToCart = function(item){
+        const i   = Number(btn.getAttribute('data-i'));
+        const act = btn.getAttribute('data-act');
         const cur = getCart();
-        const key = v => [v.id, v.color, v.size].join('|');
-        const k = key(item);
-        const found = cur.find(x => key(x) === k);
-        if (found) found.qty = (found.qty || 1) + (item.qty || 1);
-        else cur.push({ ...item, qty: item.qty || 1 });
-        setCart(cur);
-        openDrawer('cart');
-      };
+        const item = cur[i];
+        if (!item) return;
 
-      updateBadge();
-    })();
+        if (act === 'inc') item.qty = (item.qty || 1) + 1;
+        if (act === 'dec') item.qty = Math.max(1, (item.qty || 1) - 1);
+        if (act === 'remove') cur.splice(i, 1);
+
+        setCart(cur);
+        renderCart();
+      };
+    }
+
+    // Expose helper so product pages can add items
+    // window.addToCart({id, title, price, img, color, size, qty:1})
+    window.addToCart = (item) => {
+      const cur = getCart();
+      const key = (v) => [v.id, v.color, v.size].join('|');
+      const k   = key(item);
+      const found = cur.find(x => key(x) === k);
+
+      if (found) found.qty = (found.qty || 1) + (item.qty || 1);
+      else cur.push({ ...item, qty: item.qty || 1 });
+
+      setCart(cur);
+      openDrawer('cart');
+      renderCart();
+    };
+
+    // Initial sync on page load
+    updateBadge();
+    renderCart();
+  })();
   </script>
 </body>
 </html>

@@ -370,6 +370,8 @@
       setTimeout(() => (firstFocusable ? firstFocusable.focus() : slot.panel.querySelector('[data-drawer-close]')?.focus()), 10);
 
       if (key === 'cart') renderCart(); // Always refresh cart when opened
+
+      document.body.classList.add('drawer-open');
     }
 
     function closeAll() {
@@ -380,6 +382,8 @@
         setTimeout(() => { panel.hidden = true; }, 200);
       });
       backdrop.hidden = true;
+
+      document.body.classList.remove('drawer-open');
     }
 
     // Wire buttons

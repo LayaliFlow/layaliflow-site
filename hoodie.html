@@ -97,26 +97,26 @@
             <span class="value" id="colorValue">Black</span>
           </div>
           <div class="swatches" id="colorSwatches">
-            <label class="swatch">
+            <div class="swatch">
               <input checked id="color-black" name="color" type="radio" value="Black">
               <label for="color-black" title="Black" style="--swatch:#121417"></label>
-            </label>
-            <label class="swatch">
+            </div>
+            <div class="swatch">
               <input id="color-oat" name="color" type="radio" value="Oat">
               <label for="color-oat" title="Oat" style="--swatch:#e9e5dd"></label>
-            </label>
-            <label class="swatch">
+            </div>
+            <div class="swatch">
               <input id="color-greige" name="color" type="radio" value="Greige">
               <label for="color-greige" title="Greige" style="--swatch:#a79f95"></label>
-            </label>
-            <label class="swatch">
+            </div>
+            <div class="swatch">
               <input id="color-terracotta" name="color" type="radio" value="Terracotta">
               <label for="color-terracotta" title="Terracotta" style="--swatch:#8b4a36"></label>
-            </label>
-            <label class="swatch">
+            </div>
+            <div class="swatch">
               <input id="color-navy" name="color" type="radio" value="Navy">
               <label for="color-navy" title="Navy" style="--swatch:#1b2540"></label>
-            </label>
+            </div>
           </div>
         </div>
 
@@ -249,198 +249,228 @@
   </footer>
 
   <script>
+  (() => {
     // Year
     const y = document.getElementById('year');
     if (y) y.textContent = new Date().getFullYear();
 
-    (function () {
-      const backdrop = document.getElementById('drawerBackdrop');
+    /* =========================
+      DRAWERS (menu / shop / cart)
+    ========================== */
+    const backdrop = document.getElementById('drawerBackdrop');
+    const drawers = {
+      menu: { button: document.getElementById('menuBtn'),  panel: document.getElementById('menuDrawer') },
+      shop: { button: document.getElementById('shopBtn'),  panel: document.getElementById('shopDrawer') },
+      cart: { button: document.getElementById('cartBtn'),  panel: document.getElementById('cartDrawer') }
+    };
 
-      // ===== Drawers (include "cart") =====
-      const drawers = {
-        menu: { button: document.getElementById('menuBtn'), panel: document.getElementById('menuDrawer') },
-        shop: { button: document.getElementById('shopBtn'), panel: document.getElementById('shopDrawer') },
-        cart: { button: document.getElementById('cartBtn'), panel: document.getElementById('cartDrawer') }
-      };
+    function openDrawer(key) {
+      const slot = drawers[key];
+      if (!slot?.panel) return;
 
-      function openDrawer(key) {
-        const slot = drawers[key];
-        if (!slot?.panel) return;
-        Object.values(drawers).forEach(({ panel }) => panel?.removeAttribute('open'));
-        slot.panel.hidden = false;
-        backdrop.hidden = false;
-        requestAnimationFrame(() => slot.panel.setAttribute('open', ''));
-        slot.button?.setAttribute('aria-expanded', 'true');
+      // close others, reveal this
+      Object.values(drawers).forEach(({ panel }) => panel?.removeAttribute('open'));
+      slot.panel.hidden = false;
+      backdrop.hidden = false;
+      requestAnimationFrame(() => slot.panel.setAttribute('open',''));
+      slot.button?.setAttribute('aria-expanded','true');
 
-        const firstLink = slot.panel.querySelector('a, button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
-        setTimeout(() => (firstLink ? firstLink.focus() : slot.panel.querySelector('[data-drawer-close]')?.focus()), 10);
+      // focus
+      const first = slot.panel.querySelector('a, button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+      setTimeout(() => (first ? first.focus() : slot.panel.querySelector('[data-drawer-close]')?.focus()), 10);
 
-        if (key === 'cart') renderCart();
-      }
+      if (key === 'cart') renderCart();      // refresh cart on open
+      document.body.classList.add('drawer-open'); // lock scroll
+    }
 
-      function closeAll() {
-        Object.values(drawers).forEach(({ button, panel }) => {
-          if (!panel) return;
-          panel.removeAttribute('open');
-          button?.setAttribute('aria-expanded', 'false');
-          setTimeout(() => { panel.hidden = true; }, 200);
-        });
-        backdrop.hidden = true;
-      }
+    function closeAll() {
+      Object.values(drawers).forEach(({ button, panel }) => {
+        if (!panel) return;
+        panel.removeAttribute('open');
+        button?.setAttribute('aria-expanded','false');
+        setTimeout(() => { panel.hidden = true; }, 200);
+      });
+      backdrop.hidden = true;
+      document.body.classList.remove('drawer-open');
+    }
 
-      drawers.menu.button?.addEventListener('click', () => openDrawer('menu'));
-      drawers.shop.button?.addEventListener('click', () => openDrawer('shop'));
-      drawers.cart.button?.addEventListener('click', () => openDrawer('cart'));
+    drawers.menu.button?.addEventListener('click', () => openDrawer('menu'));
+    drawers.shop.button?.addEventListener('click', () => openDrawer('shop'));
+    drawers.cart.button?.addEventListener('click', () => openDrawer('cart'));
+    backdrop?.addEventListener('click', closeAll);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAll(); });
+    document.querySelectorAll('[data-drawer-close]').forEach(btn => btn.addEventListener('click', closeAll));
+    document.querySelectorAll('.drawer a').forEach(a => a.addEventListener('click', closeAll));
 
-      backdrop.addEventListener('click', closeAll);
-      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAll(); });
-      document.querySelectorAll('[data-drawer-close]').forEach(btn => btn.addEventListener('click', closeAll));
-      document.querySelectorAll('.drawer a').forEach(a => a.addEventListener('click', closeAll));
+    /* =========================
+      MINI‑CART (shared)
+    ========================== */
+    const CART_KEY   = 'lf_cart';
+    const badge      = document.getElementById('cartBadge');
+    const listEl     = document.getElementById('cartList');
+    const emptyEl    = document.getElementById('cartEmpty');
+    const hasEl      = document.getElementById('cartHasItems');
+    const subtotalEl = document.getElementById('cartSubtotal');
+    const checkoutBtn= document.getElementById('checkoutBtn');
 
-      // ===== Mini‑cart logic (same as index.html) =====
-      const CART_KEY = 'lf_cart';
-      const badge = document.getElementById('cartBadge');
-      const listEl = document.getElementById('cartList');
-      const emptyEl = document.getElementById('cartEmpty');
-      const hasEl = document.getElementById('cartHasItems');
-      const subtotalEl = document.getElementById('cartSubtotal');
-      const checkoutBtn = document.getElementById('checkoutBtn');
+    const getCart = () => {
+      try { return JSON.parse(localStorage.getItem(CART_KEY)) || []; }
+      catch { return []; }
+    };
+    const setCart = (items) => {
+      localStorage.setItem(CART_KEY, JSON.stringify(items));
+      updateBadge(items);
+    };
+    const updateBadge = (items = getCart()) => {
+      const count = items.reduce((n, it) => n + (it.qty || 0), 0);
+      if (badge) badge.textContent = count;
+    };
+    const money = (n) =>
+      new Intl.NumberFormat(undefined, { style: 'currency', currency: 'CAD' }).format(n || 0);
 
-      function getCart() {
-        try { return JSON.parse(localStorage.getItem(CART_KEY)) || []; }
-        catch { return []; }
-      }
-      function setCart(items) {
-        localStorage.setItem(CART_KEY, JSON.stringify(items));
-        updateBadge(items);
-      }
-      function updateBadge(items = getCart()) {
-        const count = items.reduce((n, it) => n + (it.qty || 0), 0);
-        if (badge) badge.textContent = count;
-      }
-      function money(n) {
-        return new Intl.NumberFormat(undefined, { style: 'currency', currency: 'CAD' }).format(n || 0);
-      }
+    function renderCart() {
+      const items = getCart();
+      const hasItems = items.length > 0;
 
-      function renderCart() {
-        const items = getCart();
-        const hasItems = items.length > 0;
-
-        if (emptyEl) emptyEl.hidden = hasItems;
-        if (hasEl) hasEl.hidden = !hasItems;
-
-        if (!hasItems) {
+      // toggle sections
+      if (emptyEl && hasEl) {
+        if (hasItems) {
+          emptyEl.setAttribute('hidden', '');
+          hasEl.removeAttribute('hidden');
+        } else {
+          hasEl.setAttribute('hidden', '');
+          emptyEl.removeAttribute('hidden');
           if (checkoutBtn) checkoutBtn.disabled = true;
-          return;
         }
+      }
+      if (!hasItems) return;
 
-        if (listEl) listEl.innerHTML = '';
-        let subtotal = 0;
+      // build list
+      if (listEl) listEl.innerHTML = '';
+      let subtotal = 0;
 
-        items.forEach((it, idx) => {
-          const price = Number(it.price || 0);
-          const qty = Number(it.qty || 1);
-          subtotal += price * qty;
+      items.forEach((it, idx) => {
+        const price = Number(it.price || 0);
+        const qty   = Number(it.qty || 1);
+        subtotal += price * qty;
 
-          const li = document.createElement('li');
-          li.className = 'cart-item';
-          li.innerHTML = `
-            <div class="cart-thumb">${it.img ? `<img src="${it.img}" alt="">` : ''}</div>
-            <div class="cart-info">
-              <div class="title">${it.title || 'Item'}</div>
-              <div class="meta">${[it.color, it.size].filter(Boolean).join(' • ')}</div>
-              <div class="cart-qty">
-                <button class="qty-btn" data-act="dec" data-i="${idx}" aria-label="Decrease quantity">−</button>
-                <span aria-live="polite">${qty}</span>
-                <button class="qty-btn" data-act="inc" data-i="${idx}" aria-label="Increase quantity">+</button>
-                <button class="remove-btn" data-act="remove" data-i="${idx}">Remove</button>
-              </div>
+        const li = document.createElement('li');
+        li.className = 'cart-item';
+        li.innerHTML = `
+          <div class="cart-thumb">${it.img ? `<img src="${it.img}" alt="">` : ''}</div>
+          <div class="cart-info">
+            <div class="title">${it.title || 'Item'}</div>
+            <div class="meta">${[it.color, it.size].filter(Boolean).join(' • ')}</div>
+            <div class="cart-qty">
+              <button class="qty-btn" data-act="dec" data-i="${idx}" aria-label="Decrease quantity">−</button>
+              <span aria-live="polite">${qty}</span>
+              <button class="qty-btn" data-act="inc" data-i="${idx}" aria-label="Increase quantity">+</button>
+              <button class="remove-btn" data-act="remove" data-i="${idx}">Remove</button>
             </div>
-            <div style="align-self:center; font-weight:600;">${money(price * qty)}</div>
-          `;
-          listEl?.appendChild(li);
-        });
+          </div>
+          <div style="align-self:center; font-weight:600;">${money(price * qty)}</div>
+        `;
+        listEl?.appendChild(li);
+      });
 
-        if (subtotalEl) subtotalEl.textContent = money(subtotal);
-        if (checkoutBtn) checkoutBtn.disabled = subtotal <= 0;
+      if (subtotalEl)  subtotalEl.textContent = money(subtotal);
+      if (checkoutBtn) checkoutBtn.disabled  = subtotal <= 0;
+    }
 
-        listEl?.addEventListener('click', (e) => {
-          const btn = e.target.closest('[data-act]');
-          if (!btn) return;
-          const i = Number(btn.getAttribute('data-i'));
-          const act = btn.getAttribute('data-act');
-          const cur = getCart();
-          const item = cur[i];
-          if (!item) return;
+    // one delegated click handler (no re-binding)
+    if (listEl) {
+      listEl.onclick = (e) => {
+        const btn = e.target.closest('[data-act]');
+        if (!btn) return;
 
-          if (act === 'inc') item.qty = (item.qty || 1) + 1;
-          if (act === 'dec') item.qty = Math.max(1, (item.qty || 1) - 1);
-          if (act === 'remove') cur.splice(i, 1);
-
-          setCart(cur);
-          renderCart();
-        }, { once: true });
-      }
-
-      // Add‑to‑cart for this product
-      document.querySelector('.add-to-cart')?.addEventListener('click', () => {
-        const price = Number(document.getElementById('priceEl')?.dataset.price || 0);
-        const color = document.querySelector('input[name="color"]:checked')?.value || 'Black';
-        const size = document.querySelector('input[name="size"]:checked')?.value || 'M';
-        const img = document.querySelector('.stage-img.is-active')?.getAttribute('src') || 'images/hoodie.png';
-
-        const item = {
-          id: 'hoodie', title: 'Turtleneck Hoodie',
-          price, img, color, size, qty: 1
-        };
-
-        // Reuse the same storage API as index
+        const i   = Number(btn.getAttribute('data-i'));
+        const act = btn.getAttribute('data-act');
         const cur = getCart();
-        const key = (v) => [v.id, v.color, v.size].join('|');
-        const k = key(item);
-        const found = cur.find(x => key(x) === k);
-        if (found) found.qty = (found.qty || 1) + 1;
-        else cur.push(item);
+        const item = cur[i];
+        if (!item) return;
+
+        if (act === 'inc') item.qty = (item.qty || 1) + 1;
+        if (act === 'dec') item.qty = Math.max(1, (item.qty || 1) - 1);
+        if (act === 'remove') cur.splice(i, 1);
+
         setCart(cur);
+        renderCart();
+      };
+    }
 
-        openDrawer('cart');
+    // shared helper
+    // window.addToCart({id, title, price, img, color, size, qty:1})
+    window.addToCart = (item) => {
+      const cur = getCart();
+      const key = (v) => [v.id, v.color, v.size].join('|');
+      const k   = key(item);
+      const found = cur.find(x => key(x) === k);
+
+      if (found) found.qty = (found.qty || 1) + (item.qty || 1);
+      else cur.push({ ...item, qty: item.qty || 1 });
+
+      setCart(cur);
+      openDrawer('cart');
+      renderCart();
+    };
+
+    /* =========================
+      PRODUCT: Add to cart button
+    ========================== */
+    document.querySelector('.add-to-cart')?.addEventListener('click', () => {
+      const price = Number(document.getElementById('priceEl')?.dataset.price || 0);
+      const color = document.querySelector('input[name="color"]:checked')?.value || 'Black';
+      const size  = document.querySelector('input[name="size"]:checked')?.value || 'M';
+      const img   = document.querySelector('.stage-img.is-active')?.getAttribute('src') || 'images/hoodie.png';
+
+      window.addToCart({
+        id: 'hoodie',
+        title: 'Turtleneck Hoodie',
+        price,
+        img,
+        color,
+        size,
+        qty: 1
       });
+    });
 
-      // Update color label live
-      document.getElementById('colorSwatches')?.addEventListener('change', (e) => {
-        if (e.target.name === 'color') {
-          document.getElementById('colorValue').textContent = e.target.value;
-        }
-      });
-
-      // Initialize badge on load
-      updateBadge();
-    })();
-
-    // Lightweight gallery (unchanged)
-    (function () {
-      const stageImgs = Array.from(document.querySelectorAll('.stage-img'));
-      const thumbs = Array.from(document.querySelectorAll('.thumb'));
-      const prevBtn = document.querySelector('.gallery-nav.prev');
-      const nextBtn = document.querySelector('.gallery-nav.next');
-
-      let currentIndex = 0;
-
-      function updateGallery(index) {
-        stageImgs.forEach((img, i) => img.classList.toggle('is-active', i === index));
-        thumbs.forEach((th, i) => th.classList.toggle('is-active', i === index));
-        currentIndex = index;
-
-        prevBtn.style.display = currentIndex === 0 ? 'none' : 'block';
-        nextBtn.style.display = currentIndex === stageImgs.length - 1 ? 'none' : 'block';
+    // live color label
+    document.getElementById('colorSwatches')?.addEventListener('change', (e) => {
+      if (e.target.name === 'color') {
+        document.getElementById('colorValue').textContent = e.target.value;
       }
+    });
 
-      prevBtn.addEventListener('click', () => { if (currentIndex > 0) updateGallery(currentIndex - 1); });
-      nextBtn.addEventListener('click', () => { if (currentIndex < stageImgs.length - 1) updateGallery(currentIndex + 1); });
-      thumbs.forEach((thumb, i) => thumb.addEventListener('click', () => updateGallery(i)));
+    // initial sync
+    updateBadge();
+    renderCart();
+  })();
 
-      updateGallery(0);
-    })();
+  /* =========================
+    LIGHT GALLERY
+  ========================== */
+  (() => {
+    const stageImgs = Array.from(document.querySelectorAll('.stage-img'));
+    const thumbs    = Array.from(document.querySelectorAll('.thumb'));
+    const prevBtn   = document.querySelector('.gallery-nav.prev');
+    const nextBtn   = document.querySelector('.gallery-nav.next');
+
+    let currentIndex = 0;
+
+    function updateGallery(index) {
+      stageImgs.forEach((img, i) => img.classList.toggle('is-active', i === index));
+      thumbs.forEach((th, i) => th.classList.toggle('is-active', i === index));
+      currentIndex = index;
+      if (prevBtn) prevBtn.style.display = currentIndex === 0 ? 'none' : 'block';
+      if (nextBtn) nextBtn.style.display = currentIndex === stageImgs.length - 1 ? 'none' : 'block';
+    }
+
+    prevBtn?.addEventListener('click', () => { if (currentIndex > 0) updateGallery(currentIndex - 1); });
+    nextBtn?.addEventListener('click', () => { if (currentIndex < stageImgs.length - 1) updateGallery(currentIndex + 1); });
+    thumbs.forEach((thumb, i) => thumb.addEventListener('click', () => updateGallery(i)));
+
+    updateGallery(0);
+  })();
   </script>
 </body>
 </html>
